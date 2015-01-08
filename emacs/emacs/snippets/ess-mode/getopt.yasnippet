@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: getopt
+# key: getopt
+# --
+library(getopt)
+GETOPT_ARG_NONE <- 0
+GETOPT_ARG_REQUIRED <- 1
+GETOPT_ARG_OPTIONAL <- 2
+
+spec = matrix(c(
+    'input', 'i', GETOPT_ARG_REQUIRED, "character",$0
+    ), byrow = TRUE, ncol = 4)
+opt = getopt(spec);
+
+

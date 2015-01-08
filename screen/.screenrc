@@ -1,0 +1,24 @@
+startup_message off
+vbell off
+#defscrollback 512
+ 
+caption always "%{=u kC} %= %-w%L>%{=b G}[:%n %t:]%{-}%52<%+w %L="
+#caption always "%?%F%{-b 4w}%:%{-b bb}%? %H | %l | %m-%d %c |%?%F%{-b 4w}%?%L=%-Lw%45>%{-b w4}%n%f* %t%{-}%+Lw%-0<"
+
+# copy from http://blog.solrex.org/articles/gnu-screen-tips.html         
+#caption always '%{=b cw}%-w%{=rb db}%>%n %t%{-}%+w%{-b}%< %{= kG}%-=%D %c%{-}
+shelltitle '$ |bash'
+
+escape ^L^L
+ 
+deflogin off
+# default shell is zsh
+# defshell /usr/bin/zsh
+# default starting dir is ~
+chdir
+
+bindkey -k F1 prev
+bindkey -k F2 next
+
+defscrollback 5000
+

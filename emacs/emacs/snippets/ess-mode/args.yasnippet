@@ -1,0 +1,7 @@
+# name: args
+# --
+default.args <- c($0)
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) == 0) {
+        args <- default.args
+}

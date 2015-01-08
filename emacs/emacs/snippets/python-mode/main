@@ -1,0 +1,26 @@
+#name : a skeleton file for start a script
+# expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
+# --
+#!/usr/bin/env python
+import sys, os, re
+try:
+    from XiaoweiLib import myopen
+except:
+    sys.path = [re.sub(r'^/home/zhanxw/', '/net/fantasia/home/zhanxw/', x) for x in sys.path]
+    sys.path.append('/net/nfsb/fantasia/home/zhanxw/mylib/Python/')
+    from XiaoweiLib import myopen
+
+def usage():
+    print("%s $1" % sys.argv[0] )
+
+if __name__ == '__main__':
+    try:
+        import getopt
+        optlist, args = getopt.getopt(sys.argv[1:], '')
+        optlist = dict(optlist)
+        $0 = args
+    except:
+        usage()
+        raise
+        sys.exit(1)
+

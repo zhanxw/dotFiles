@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: sigpipe
+# key: sigpipe
+# expand-env: ((some-var some-value))
+# --
+# -*- mode: snippet -*-
+# name: sigpipe
+# key: sigpipe
+# binding: "keybinding"
+# expand-env: ((some-var some-value))
+# --
+import signal
+signal.signal(signal.SIGPIPE, signal.SIG_DFL) 

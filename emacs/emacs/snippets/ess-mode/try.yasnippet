@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: try
+# key: try
+# --
+tryResult <- try({$1},silent=TRUE)
+if(class(tryResult)=='try-error') {
+  $0
+}
