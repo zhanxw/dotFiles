@@ -1713,24 +1713,36 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; from:
 ;; http://www.plope.com/Members/chrism/flymake-mode
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "pyflakes" (list local-file))))
+;; (when (load "flymake" t)
+;;   (defun flymake-pyflakes-init ()
+;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;            (local-file (file-relative-name
+;;                         temp-file
+;;                         (file-name-directory buffer-file-name))))
+;;       (list "pyflakes" (list local-file))))
 
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
+;;   (add-to-list 'flymake-allowed-file-name-masks
+;;                '("\\.py\\'" flymake-pyflakes-init)))
 
-(add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 ;; enable flymake-cursor
-(require 'flymake-cursor)
+;; (require 'flymake-cursor)
 
-
+;; Config flychecker-google-cpplint
+;; Prompt if cpplint.py is not found
+(unless (executable-find "cpplint.py")
+  (warn "Cannot find executable cpplint.py"))
+(eval-after-load 'flycheck
+  '(progn
+     (require 'flycheck-google-cpplint)
+     ;; Add Google C++ Style checker.
+     ;; In default, syntax checked by Clang and Cppcheck.
+     (custom-set-variables
+      '(flycheck-googlelint-filter "-legal"))
+     (flycheck-add-next-checker 'c/c++-gcc
+                                'c/c++-googlelint 'append)))
 
 ;; (setq debug-on-error t)
 
@@ -1811,6 +1823,13 @@ Symbols matching the text at point are put first in the completion list."
   (let ((push-mark-before-goto-char t))
     (ido-imenu)))
 (global-set-key (kbd "C-x C-i") 'ido-imenu-push-mark)
+
+;; customize smex
+;; https://github.com/nonsequitur/smex
+(require 'smex) ; Not needed if you use package.el
+(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+                  ; when Smex is auto-initialized on its first run.
+(global-set-key (kbd "M-x") 'smex)
 
 ;; ;; enable workgroups2
 ;; ;; this should be put at the end of .emacs
