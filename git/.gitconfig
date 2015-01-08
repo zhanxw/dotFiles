@@ -8,3 +8,7 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 [url "https://"]
 	insteadOf = git://
+[http]
+	proxy = http://proxy.swmed.edu:3128
+[https]
+	proxy = http://proxy.swmed.edu:3128
