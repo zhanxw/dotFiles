@@ -14,7 +14,7 @@
 ;; remove the old, obsolete versions afterwards.
 (package-initialize)
 
-
+(setq vc-follow-symlinks t) 
 
 ;; ;; config cedet first, so to avoid max-lisp-eval-depth error
 ;; ;; from: http://emacser.com/cedet.htm
@@ -1705,7 +1705,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; ;; set-up ipython according to http://ipython.org/ipython-doc/1/config/editors.html
 ;; (setq py-python-command-args '("--matplotlib" "--colors" "LightBG"))
-(setq ipython-command "~/python/bin/ipython")
+;; (setq ipython-command "/usr/bin/ipython")
 (require 'ipython)
 
 ;; (add-to-list 'load-path "~/emacs/isend-mode.el")
@@ -1827,5 +1827,6 @@ Symbols matching the text at point are put first in the completion list."
 ;; Type "<prefix> ?" for more help
 (require 'workgroups2)
 (workgroups-mode 1)  ; put this one at the bottom of .emacs
+
 
 
