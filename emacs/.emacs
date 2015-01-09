@@ -14,7 +14,7 @@
 ;; remove the old, obsolete versions afterwards.
 (package-initialize)
 
-(setq vc-follow-symlinks t) 
+(setq vc-follow-symlinks t)
 
 ;; ;; config cedet first, so to avoid max-lisp-eval-depth error
 ;; ;; from: http://emacser.com/cedet.htm
@@ -756,7 +756,7 @@ This command is to be used interactively."
   (interactive)
   (kill-ring-save (point)
                   (line-end-position))
-    (message "Copied to end of line"))
+  (message "Copied to end of line"))
 (defun copy-line (arg)
   "Copy to end of line, or as many lines as prefix argument"
   (interactive "P")
@@ -767,7 +767,7 @@ This command is to be used interactively."
   (interactive "P")
   (if (region-active-p)
       (kill-ring-save (region-beginning) (region-end))
-        (copy-line arg)))
+    (copy-line arg)))
 (global-set-key (kbd "M-W") 'save-region-or-current-line)
 
 ;; add redo mode
@@ -1660,6 +1660,30 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'highlight-chars)
 (add-hook 'font-lock-mode-hook 'hc-highlight-tabs)
 
+;; use ipython
+;; http://www.emacswiki.org/emacs?action=browse;oldid=PythonMode;id=PythonProgrammingInEmacs
+;; useful keys:
+;; C-c C-c         python-shell-send-buffer
+;; C-c C-r         python-shell-send-region
+;; C-c C-z         python-shell-switch-to-shell
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args ""
+ python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+ python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+ python-shell-completion-setup-code
+ "from IPython.core.completerlib import module_completion"
+ python-shell-completion-module-string-code
+ "';'.join(module_completion('''%s'''))\n"
+ python-shell-completion-string-code
+ "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+(setq py-shell-name "ipython")
+
+;; let imenu support python
+;; http://stackoverflow.com/questions/6317667/fabian-gallinas-python-el-imenu-support
+(add-hook 'python-mode-hook
+          (lambda ()
+                (setq imenu-create-index-function 'python-imenu-create-index)))
 ;; ;; Pymacs + Ropemacs
 
 ;; Ropemacs
@@ -1672,11 +1696,11 @@ point reaches the beginning or end of the buffer, stop there."
                                         ;(setenv "PYMACS_PYTHON" "python2.5") ; disabled for now
                                         ; (require 'python-mode)
   (require 'pymacs)
-  ;; (autoload 'pymacs-apply "pymacs")
-  ;; (autoload 'pymacs-call "pymacs")
-  ;; (autoload 'pymacs-eval "pymacs" nil t)
-  ;; (autoload 'pymacs-exec "pymacs" nil t)
-  ;; (autoload 'pymacs-load "pymacs" nil t)
+  (autoload 'pymacs-apply "pymacs")
+  (autoload 'pymacs-call "pymacs")
+  (autoload 'pymacs-eval "pymacs" nil t)
+  (autoload 'pymacs-exec "pymacs" nil t)
+  (autoload 'pymacs-load "pymacs" nil t)
   ;; (eval-after-load "pymacs"
   ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
   (pymacs-load "ropemacs" "rope-")
@@ -1692,6 +1716,9 @@ point reaches the beginning or end of the buffer, stop there."
   )
 (add-hook 'python-mode-hook 'my-python-mode-common-hook)
 
+;; (setq py-start-run-ipython-shell t)
+;; (setq python-shell-interpreter "ipython")
+
 ;; ;; use emacs-jedi
 ;; (add-to-list 'load-path "~/emacs/emacs-deferred")
 ;; (add-to-list 'load-path "~/emacs/emacs-ctable")
@@ -1706,7 +1733,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ;; set-up ipython according to http://ipython.org/ipython-doc/1/config/editors.html
 ;; (setq py-python-command-args '("--matplotlib" "--colors" "LightBG"))
 ;; (setq ipython-command "/usr/bin/ipython")
-(require 'ipython)
+;; (require 'ipython)
 
 ;; (add-to-list 'load-path "~/emacs/isend-mode.el")
 ;; (require 'isend)
@@ -1783,15 +1810,15 @@ Symbols matching the text at point are put first in the completion list."
                              (cond
                               ((and (listp symbol) (imenu--subalist-p symbol))
                                (addsymbols symbol))
- 
+
                               ((listp symbol)
                                (setq name (car symbol))
                                (setq position (cdr symbol)))
- 
+
                               ((stringp symbol)
                                (setq name symbol)
                                (setq position (get-text-property 1 'org-imenu-marker symbol))))
- 
+
                              (unless (or (null position) (null name))
                                (add-to-list 'symbol-names name)
                                (add-to-list 'name-and-pos (cons name position))))))))
@@ -1828,7 +1855,7 @@ Symbols matching the text at point are put first in the completion list."
 ;; https://github.com/nonsequitur/smex
 (require 'smex) ; Not needed if you use package.el
 (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
-                  ; when Smex is auto-initialized on its first run.
+                                        ; when Smex is auto-initialized on its first run.
 (global-set-key (kbd "M-x") 'smex)
 
 
@@ -1857,6 +1884,3 @@ Symbols matching the text at point are put first in the completion list."
 ;; Type "<prefix> ?" for more help
 (require 'workgroups2)
 (workgroups-mode 1)  ; put this one at the bottom of .emacs
-
-
-
