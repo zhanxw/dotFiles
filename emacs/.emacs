@@ -1831,6 +1831,17 @@ Symbols matching the text at point are put first in the completion list."
                   ; when Smex is auto-initialized on its first run.
 (global-set-key (kbd "M-x") 'smex)
 
+
+;; proxy settings, so that Emacs can access melpa, elpa repos
+(if (or (string-suffix-p ".swmed.edu" system-name)
+        (string= "zhanxw-VirtualBox" system-name)
+        (string= "purcell" system-name))
+    (setq url-proxy-services
+          '(("no_proxy" . "^localhost")
+            ("http" . "proxy.swmed.edu:3128")
+            ("https" . "proxy.swmed.edu:3128")
+            ("ftp" . "proxy.swmed.edu:3128"))))
+
 ;; ;; enable workgroups2
 ;; ;; this should be put at the end of .emacs
 ;; By default prefix is: "C-c z"
