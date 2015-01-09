@@ -1692,6 +1692,9 @@ point reaches the beginning or end of the buffer, stop there."
   )
 (add-hook 'python-mode-hook 'my-python-mode-common-hook)
 
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)                 ; optional
+
 ;; ;; use emacs-jedi
 ;; (add-to-list 'load-path "~/emacs/emacs-deferred")
 ;; (add-to-list 'load-path "~/emacs/emacs-ctable")

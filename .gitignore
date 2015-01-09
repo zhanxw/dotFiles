@@ -2,3 +2,5 @@
 emacs/.emacs.d/elpa/archives
 emacs/.emacs.d/ac-comphist.dat
 emacs/.emacs.d/smex-items
+emacs/.emacs.d/.python-environments/
+emacs/.emacs.d/elpa/isend-mode-readme.txt
