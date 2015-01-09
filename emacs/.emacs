@@ -1716,14 +1716,17 @@ point reaches the beginning or end of the buffer, stop there."
   )
 (add-hook 'python-mode-hook 'my-python-mode-common-hook)
 
-;; (setq py-start-run-ipython-shell t)
-;; (setq python-shell-interpreter "ipython")
+(setq python-shell-interpreter "ipython")
+;; enable jedi for python
+(require 'epc)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)                 ; optional
 
 ;; ;; use emacs-jedi
 ;; (add-to-list 'load-path "~/emacs/emacs-deferred")
 ;; (add-to-list 'load-path "~/emacs/emacs-ctable")
 ;; (add-to-list 'load-path "~/emacs/emacs-epc")
-;; (require 'epc)
+
 ;; (add-to-list 'load-path "~/emacs/emacs-jedi")
 ;; (autoload 'jedi:setup "jedi" nil t)
 ;; (add-hook 'python-mode-hook 'jedi:setup)
