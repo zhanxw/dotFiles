@@ -21,12 +21,13 @@ fi
 if [[ -f .gitconfig ]]; then
     echo "Git setting exists, skipping..."
 else
-    ln -s dotFiles/git/.gitconfig
-    echo "If need to set up proxy, add these to .gitconfig:"
-    echo "[http]"
-    echo "	proxy = http://proxy.swmed.edu:3128"
-    echo "[https]"
-    echo "	proxy = http://proxy.swmed.edu:3128"
+    useProxy="$(ifconfig |grep 129.112)"
+    if [ -z "$useProxy" ]; then
+      ln -s dotFiles/git/.gitconfig
+    else
+      echo "  Enable proxy settings"
+      sed 's:#\([ \t]\+proxy\):\1:g' dotFiles/git/.gitconfig > .gitconfig
+    fi
 fi
 
 cd -
