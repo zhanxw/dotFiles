@@ -256,12 +256,34 @@
 ;; set R program for ESS
 ;; (setq inferior-R-program-name "~/software/Rmkl/bin/R")
 ;; (setq inferior-R-program-name "/usr/bin/R")
-(setq inferior-R-program-name "~/bin/R")
+;; (setq inferior-R-program-name "~/bin/R")
 
 ;; for switch buffer use
 (global-set-key "\C-x\C-b" 'bs-show)    ;; or another key
 (global-set-key "\M-p"  'bs-cycle-previous)
 (global-set-key "\M-n"  'bs-cycle-next)
+
+;; set ess coding style
+;; http://stackoverflow.com/questions/12805873/changing-indentation-in-emacs-ess
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (ess-set-style 'DEFAULT 'quiet)
+            ;; Because
+            ;;                                 DEF GNU BSD K&R  C++
+            ;; ess-indent-level                  2   2   8   5  4
+            ;; ess-continued-statement-offset    2   2   8   5  4
+            ;; ess-brace-offset                  0   0  -8  -5 -4
+            ;; ess-arg-function-offset           2   4   0   0  0
+            ;; ess-expression-offset             4   2   8   5  4
+            ;; ess-else-offset                   0   0   0   0  0
+            ;; ess-close-brace-offset            0   0   0   0  0
+            (add-hook 'local-write-file-hooks
+                      (lambda ()
+                        (ess-nuke-trailing-whitespace)))))
+(setq ess-nuke-trailing-whitespace-p 'ask)
+;; or even
+;; (setq ess-nuke-trailing-whitespace-p t)
+ 
 
 ;; how to bind keys in Emacs:
 ;; 1. M-x global-set-key
