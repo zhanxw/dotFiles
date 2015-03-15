@@ -280,9 +280,9 @@
             (add-hook 'local-write-file-hooks
                       (lambda ()
                         (ess-nuke-trailing-whitespace)))))
-(setq ess-nuke-trailing-whitespace-p 'ask)
+;; (setq ess-nuke-trailing-whitespace-p 'ask)
 ;; or even
-;; (setq ess-nuke-trailing-whitespace-p t)
+(setq ess-nuke-trailing-whitespace-p t)
  
 
 ;; how to bind keys in Emacs:
@@ -1323,7 +1323,6 @@ This command is to be used interactively."
 (require 'yasnippet)
 (setq yas-snippet-dirs
       '("~/emacs/snippets"    ;; personal collectino
-        "~/.emacs.d/elpa/yasnippet-20141117.327"
         ))
 (yas-global-mode 1)
 
