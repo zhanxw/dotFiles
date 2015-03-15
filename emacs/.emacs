@@ -1189,6 +1189,10 @@ This command is to be used interactively."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("ecbb4a94a854400f249b0966fa74ac47d63e1d6a15a85ac05a1ecc8612ddd9d9" default)))
+ '(flycheck-googlelint-filter "-legal")
  '(max-specpdl-size 3200))
 ;; (custom-set-faces
 ;;   ;; custom-set-faces was added by Custom.
@@ -2011,3 +2015,9 @@ Symbols matching the text at point are put first in the completion list."
 ;; Type "<prefix> ?" for more help
 (require 'workgroups2)
 (workgroups-mode 1)  ; put this one at the bottom of .emacs
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
