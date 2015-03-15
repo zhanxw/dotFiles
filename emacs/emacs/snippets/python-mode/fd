@@ -1,0 +1,3 @@
+# name: fd
+# --
+fd = ln.strip().split()
