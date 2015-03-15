@@ -256,7 +256,7 @@
 ;; set R program for ESS
 ;; (setq inferior-R-program-name "~/software/Rmkl/bin/R")
 ;; (setq inferior-R-program-name "/usr/bin/R")
-(setq inferior-R-program-name "~/bin/R")
+;; (setq inferior-R-program-name "~/bin/R")
 
 ;; for switch buffer use
 (global-set-key "\C-x\C-b" 'bs-show)    ;; or another key
@@ -1831,6 +1831,9 @@ Symbols matching the text at point are put first in the completion list."
                   ; when Smex is auto-initialized on its first run.
 (global-set-key (kbd "M-x") 'smex)
 
+;; (require 'powerline)
+;; (powerline-default-theme)
+;; (powerline-center-theme)
 ;; ;; enable workgroups2
 ;; ;; this should be put at the end of .emacs
 ;; By default prefix is: "C-c z"
