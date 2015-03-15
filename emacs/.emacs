@@ -1986,6 +1986,16 @@ Symbols matching the text at point are put first in the completion list."
             ("https" . "proxy.swmed.edu:3128")
             ("ftp" . "proxy.swmed.edu:3128"))))
 
+;; anzu mode
+;; a minor mode which displays current match and total matches information in
+;; the mode-line in various search modes.
+(global-anzu-mode +1)
+
+
+;; rainbox-delimiter
+;; https://github.com/Fanael/rainbow-delimiters
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 ;; ;; enable workgroups2
 ;; ;; this should be put at the end of .emacs
 ;; By default prefix is: "C-c z"
