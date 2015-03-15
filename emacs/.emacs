@@ -1828,6 +1828,10 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'epc)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)                 ; optional
+;; need to make sure jedi is installed
+;; refer to http://tkf.github.io/emacs-jedi/latest/#pyinstall
+;; (setq jedi:server-command '("~/.emacs.d/elpa/jedi-core-20150305.212/jediepcserver.py"))
+
 
 ;; ;; use emacs-jedi
 ;; (add-to-list 'load-path "~/emacs/emacs-deferred")
