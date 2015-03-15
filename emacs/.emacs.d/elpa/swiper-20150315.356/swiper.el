@@ -4,7 +4,7 @@
 
 ;; Author: Oleh Krehel <ohwoeowho@gmail.com>
 ;; URL: https://github.com/abo-abo/swiper
-;; Package-Version: 20150314.853
+;; Package-Version: 20150315.356
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24.1") (ivy "0.1.0"))
 ;; Keywords: matching
@@ -43,7 +43,7 @@
   :group 'matching
   :prefix "swiper-")
 
-(defcustom swiper-completion-method 'helm
+(defcustom swiper-completion-method 'ivy
   "Method to select a candidate from a list of strings."
   :type '(choice
           (const :tag "Helm" helm)
@@ -143,7 +143,8 @@ When non-nil, INITIAL-INPUT is the initial search pattern."
          (setq res (ivy-read "pattern: "
                              (swiper--candidates)
                              initial-input
-                             #'swiper--update-input-ivy))
+                             #'swiper--update-input-ivy
+                             (1- (line-number-at-pos))))
       (ido-mode 1)
       (swiper--cleanup)
       (if (null ivy-exit)
@@ -241,7 +242,9 @@ When non-nil, INITIAL-INPUT is the initial search pattern."
       (when (plusp num)
         (goto-char (point-min))
         (forward-line (1- num))
-        (recenter))
+        (unless (and (> (point) (window-start))
+                     (< (point) (window-end swiper--window t)))
+          (recenter)))
       (let ((ov (make-overlay
                  (line-beginning-position)
                  (1+ (line-end-position)))))

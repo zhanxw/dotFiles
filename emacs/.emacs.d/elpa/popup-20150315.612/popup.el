@@ -1,10 +1,10 @@
 ;;; popup.el --- Visual Popup User Interface
 
-;; Copyright (C) 2009, 2010, 2011, 2012, 2013  Tomohiro Matsuyama
+;; Copyright (C) 2009-2015  Tomohiro Matsuyama
 
-;; Author: Tomohiro Matsuyama <tomo@cx4a.org>
+;; Author: Tomohiro Matsuyama <m2ym.pub@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20150116.1223
+;; Package-Version: 20150315.612
 ;; Version: 0.5.2
 ;; Package-Requires: ((cl-lib "0.3"))
 
