@@ -14,7 +14,7 @@
 ;; remove the old, obsolete versions afterwards.
 (package-initialize)
 
-(setq vc-follow-symlinks t) 
+(setq vc-follow-symlinks t)
 
 ;; ;; config cedet first, so to avoid max-lisp-eval-depth error
 ;; ;; from: http://emacser.com/cedet.htm
@@ -262,6 +262,28 @@
 (global-set-key "\C-x\C-b" 'bs-show)    ;; or another key
 (global-set-key "\M-p"  'bs-cycle-previous)
 (global-set-key "\M-n"  'bs-cycle-next)
+
+;; set ess coding style
+;; http://stackoverflow.com/questions/12805873/changing-indentation-in-emacs-ess
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (ess-set-style 'DEFAULT 'quiet)
+            ;; Because
+            ;;                                 DEF GNU BSD K&R  C++
+            ;; ess-indent-level                  2   2   8   5  4
+            ;; ess-continued-statement-offset    2   2   8   5  4
+            ;; ess-brace-offset                  0   0  -8  -5 -4
+            ;; ess-arg-function-offset           2   4   0   0  0
+            ;; ess-expression-offset             4   2   8   5  4
+            ;; ess-else-offset                   0   0   0   0  0
+            ;; ess-close-brace-offset            0   0   0   0  0
+            (add-hook 'local-write-file-hooks
+                      (lambda ()
+                        (ess-nuke-trailing-whitespace)))))
+;; (setq ess-nuke-trailing-whitespace-p 'ask)
+;; or even
+(setq ess-nuke-trailing-whitespace-p t)
+ 
 
 ;; how to bind keys in Emacs:
 ;; 1. M-x global-set-key
@@ -756,7 +778,7 @@ This command is to be used interactively."
   (interactive)
   (kill-ring-save (point)
                   (line-end-position))
-    (message "Copied to end of line"))
+  (message "Copied to end of line"))
 (defun copy-line (arg)
   "Copy to end of line, or as many lines as prefix argument"
   (interactive "P")
@@ -767,7 +789,7 @@ This command is to be used interactively."
   (interactive "P")
   (if (region-active-p)
       (kill-ring-save (region-beginning) (region-end))
-        (copy-line arg)))
+    (copy-line arg)))
 (global-set-key (kbd "M-W") 'save-region-or-current-line)
 
 ;; add redo mode
@@ -1301,7 +1323,6 @@ This command is to be used interactively."
 (require 'yasnippet)
 (setq yas-snippet-dirs
       '("~/emacs/snippets"    ;; personal collectino
-        "~/.emacs.d/elpa/yasnippet-20141117.327"
         ))
 (yas-global-mode 1)
 
@@ -1660,6 +1681,30 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'highlight-chars)
 (add-hook 'font-lock-mode-hook 'hc-highlight-tabs)
 
+;; use ipython
+;; http://www.emacswiki.org/emacs?action=browse;oldid=PythonMode;id=PythonProgrammingInEmacs
+;; useful keys:
+;; C-c C-c         python-shell-send-buffer
+;; C-c C-r         python-shell-send-region
+;; C-c C-z         python-shell-switch-to-shell
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args ""
+ python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+ python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+ python-shell-completion-setup-code
+ "from IPython.core.completerlib import module_completion"
+ python-shell-completion-module-string-code
+ "';'.join(module_completion('''%s'''))\n"
+ python-shell-completion-string-code
+ "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+(setq py-shell-name "ipython")
+
+;; let imenu support python
+;; http://stackoverflow.com/questions/6317667/fabian-gallinas-python-el-imenu-support
+(add-hook 'python-mode-hook
+          (lambda ()
+                (setq imenu-create-index-function 'python-imenu-create-index)))
 ;; ;; Pymacs + Ropemacs
 
 ;; Ropemacs
@@ -1672,11 +1717,11 @@ point reaches the beginning or end of the buffer, stop there."
                                         ;(setenv "PYMACS_PYTHON" "python2.5") ; disabled for now
                                         ; (require 'python-mode)
   (require 'pymacs)
-  ;; (autoload 'pymacs-apply "pymacs")
-  ;; (autoload 'pymacs-call "pymacs")
-  ;; (autoload 'pymacs-eval "pymacs" nil t)
-  ;; (autoload 'pymacs-exec "pymacs" nil t)
-  ;; (autoload 'pymacs-load "pymacs" nil t)
+  (autoload 'pymacs-apply "pymacs")
+  (autoload 'pymacs-call "pymacs")
+  (autoload 'pymacs-eval "pymacs" nil t)
+  (autoload 'pymacs-exec "pymacs" nil t)
+  (autoload 'pymacs-load "pymacs" nil t)
   ;; (eval-after-load "pymacs"
   ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
   (pymacs-load "ropemacs" "rope-")
@@ -1692,11 +1737,17 @@ point reaches the beginning or end of the buffer, stop there."
   )
 (add-hook 'python-mode-hook 'my-python-mode-common-hook)
 
+(setq python-shell-interpreter "ipython")
+;; enable jedi for python
+(require 'epc)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)                 ; optional
+
 ;; ;; use emacs-jedi
 ;; (add-to-list 'load-path "~/emacs/emacs-deferred")
 ;; (add-to-list 'load-path "~/emacs/emacs-ctable")
 ;; (add-to-list 'load-path "~/emacs/emacs-epc")
-;; (require 'epc)
+
 ;; (add-to-list 'load-path "~/emacs/emacs-jedi")
 ;; (autoload 'jedi:setup "jedi" nil t)
 ;; (add-hook 'python-mode-hook 'jedi:setup)
@@ -1706,7 +1757,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; ;; set-up ipython according to http://ipython.org/ipython-doc/1/config/editors.html
 ;; (setq py-python-command-args '("--matplotlib" "--colors" "LightBG"))
 ;; (setq ipython-command "/usr/bin/ipython")
-(require 'ipython)
+;; (require 'ipython)
 
 ;; (add-to-list 'load-path "~/emacs/isend-mode.el")
 ;; (require 'isend)
@@ -1783,15 +1834,15 @@ Symbols matching the text at point are put first in the completion list."
                              (cond
                               ((and (listp symbol) (imenu--subalist-p symbol))
                                (addsymbols symbol))
- 
+
                               ((listp symbol)
                                (setq name (car symbol))
                                (setq position (cdr symbol)))
- 
+
                               ((stringp symbol)
                                (setq name symbol)
                                (setq position (get-text-property 1 'org-imenu-marker symbol))))
- 
+
                              (unless (or (null position) (null name))
                                (add-to-list 'symbol-names name)
                                (add-to-list 'name-and-pos (cons name position))))))))
@@ -1828,12 +1879,23 @@ Symbols matching the text at point are put first in the completion list."
 ;; https://github.com/nonsequitur/smex
 (require 'smex) ; Not needed if you use package.el
 (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
-                  ; when Smex is auto-initialized on its first run.
+                                        ; when Smex is auto-initialized on its first run.
 (global-set-key (kbd "M-x") 'smex)
 
 ;; (require 'powerline)
 ;; (powerline-default-theme)
 ;; (powerline-center-theme)
+
+;; proxy settings, so that Emacs can access melpa, elpa repos
+(if (or (string-suffix-p ".swmed.edu" system-name)
+        (string= "zhanxw-VirtualBox" system-name)
+        (string= "purcell" system-name))
+    (setq url-proxy-services
+          '(("no_proxy" . "^localhost")
+            ("http" . "proxy.swmed.edu:3128")
+            ("https" . "proxy.swmed.edu:3128")
+            ("ftp" . "proxy.swmed.edu:3128"))))
+
 ;; ;; enable workgroups2
 ;; ;; this should be put at the end of .emacs
 ;; By default prefix is: "C-c z"
@@ -1849,6 +1911,3 @@ Symbols matching the text at point are put first in the completion list."
 ;; Type "<prefix> ?" for more help
 (require 'workgroups2)
 (workgroups-mode 1)  ; put this one at the bottom of .emacs
-
-
-

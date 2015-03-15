@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sigpipe
+# --
+import signal
+signal.signal(signal.SIGPIPE, signal.SIG_DFL) 
