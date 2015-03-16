@@ -8,6 +8,7 @@ else
     ln -s dotFiles/emacs/.emacs
     ln -s dotFiles/emacs/emacs
     ln -s dotFiles/emacs/.emacs.d
+    echo "Emacs setting set up"    
 fi
 
 # Screen
@@ -15,6 +16,7 @@ if [[ -f .screenrc ]]; then
     echo "Screen setting exists, skipping..."
 else
     ln -s dotFiles/screen/.screenrc
+    echo "Screen setting set up"
 fi
 
 # Git
@@ -28,6 +30,16 @@ else
       echo "  Enable proxy settings"
       sed 's:#\([ \t]\+proxy\):\1:g' dotFiles/git/.gitconfig > .gitconfig
     fi
+    echo "Git setting set up"    
+fi
+
+# bash
+if grep "dotFiles/bash/.bashrc" ~/.bashrc >&/dev/null
+then
+    echo "Bash exists, skipping..."
+else
+    echo "if [[ -f ~/dotFiles/bash/.bashrc ]]; then source ~/dotFiles/bash/.bashrc; fi" >> ~/.bashrc
+    echo "Bash setting set up"        
 fi
 
 cd -
