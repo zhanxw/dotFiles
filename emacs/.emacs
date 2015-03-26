@@ -1994,7 +1994,9 @@ Symbols matching the text at point are put first in the completion list."
 ;; a minor mode which displays current match and total matches information in
 ;; the mode-line in various search modes.
 (global-anzu-mode +1)
-
+(setq clang-format-sytle 'google)
+;; clang-format
+(require 'clang-format)
 
 ;; rainbox-delimiter
 ;; https://github.com/Fanael/rainbow-delimiters
