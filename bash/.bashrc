@@ -47,7 +47,7 @@ export HISTSIZE=450
 export HISTFILESIZE=450
 export HISTCONTROL=ignoredups
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/usr/lib
+LD_LIBRARY_PATH=$HOME/usr/lib:$LD_LIBRARY_PATH
 export LD_RUN_PATH=$LD_RUN_PATH:$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HOME/usr/lib/pkgconfig
@@ -233,3 +233,22 @@ function gqcdiff() {
   git difftool -y -x "colordiff -y -W $COLUMNS" HEAD^ HEAD| less -R
 }
 
+
+## clean up variables
+# Deduplicate path variables
+get_var () {
+    eval "echo \$$1"
+}
+set_var () {
+    eval "$1=\"$2\""
+}
+dedup_pathvar () {
+    pathvar_name="$1"
+    pathvar_value="$(get_var $pathvar_name)"
+    deduped_path="$(echo $pathvar_value | perl -e 'print join(":",grep { not $seen{$_}++ } split(/:/, scalar <>))')"
+    set_var $pathvar_name "$deduped_path"
+}
+dedup_pathvar PATH
+dedup_pathvar MANPATH
+dedup_pathvar LD_LIBRARY_PATH
+dedup_pathvar LIBRARY_PATH
