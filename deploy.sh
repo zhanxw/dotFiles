@@ -8,6 +8,7 @@ else
     ln -s dotFiles/emacs/.emacs
     ln -s dotFiles/emacs/emacs
     ln -s dotFiles/emacs/.emacs.d
+    emacs --batch --eval '(byte-recompile-directory "~/.emacs.d")'
     echo "Emacs setting set up"    
 fi
 

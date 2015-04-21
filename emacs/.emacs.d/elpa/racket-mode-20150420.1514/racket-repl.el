@@ -396,11 +396,16 @@ With prefix arg, open the N-th last shown image."
      (")"               racket-insert-closing-paren)
      ("]"               racket-insert-closing-bracket)
      ("}"               racket-insert-closing-brace)
+     ("C-c C-e x"       racket-expand-definition)
+     ("C-c C-e e"       racket-expand-last-sexp)
+     ("C-c C-e r"       racket-expand-region)
+     ("C-c C-e a"       racket-expand-again)
      ("M-C-y"           racket-insert-lambda)
      ("C-c C-d"         racket-doc)
      ("C-c C-."         racket-describe)
      ("M-."             racket-visit-definition)
      ("C-M-."           racket-visit-module)
+     ("M-,"             racket-unvisit)
      ("C-c C-z"         racket-repl-switch-to-edit)))
   "Keymap for Racket REPL mode.")
 
@@ -410,6 +415,12 @@ With prefix arg, open the N-th last shown image."
     ["Insert λ" racket-insert-lambda]
     ["Indent Region" indent-region]
     ["Cycle Paren Shapes" racket-cycle-paren-shapes]
+    ("Macro Expand"
+     ["Region" racket-expand-region  :active (region-active-p)]
+     ["Definition" racket-expand-definition]
+     ["Last S-Expression" racket-expand-last-sexp]
+     "---"
+     ["Again" racket-expand-again])
     "---"
     ["Visit Definition" racket-visit-definition]
     ["Visit Module" racket-visit-module]

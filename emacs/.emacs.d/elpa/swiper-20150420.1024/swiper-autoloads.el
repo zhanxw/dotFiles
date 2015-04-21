@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "ivy" "ivy.el" (21813 8250 573920 496000))
+;;;### (autoloads nil "ivy" "ivy.el" (21813 52181 813156 83000))
 ;;; Generated autoloads from ivy.el
 
 (defvar ivy-mode nil "\
@@ -27,7 +27,7 @@ Turning on Ivy mode will set `completing-read-function' to
 
 ;;;***
 
-;;;### (autoloads nil "swiper" "swiper.el" (21813 8250 563920 39000))
+;;;### (autoloads nil "swiper" "swiper.el" (21813 52181 813156 83000))
 ;;; Generated autoloads from swiper.el
 
 (autoload 'swiper "swiper" "\
@@ -38,7 +38,7 @@ When non-nil, INITIAL-INPUT is the initial search pattern.
 
 ;;;***
 
-;;;### (autoloads nil nil ("swiper-pkg.el") (21813 8250 581848 140000))
+;;;### (autoloads nil nil ("swiper-pkg.el") (21813 52181 860441 590000))
 
 ;;;***
 

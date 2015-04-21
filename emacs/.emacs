@@ -1210,6 +1210,8 @@ This command is to be used interactively."
 
 ;; (add-to-list 'load-path "~/emacs/magit")
 (require 'magit)
+(setq magit-auto-revert-mode nil)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; gtags
 ;; from http://www.newsmth.net/bbscon.php?bid=573&id=84691&ftype=3&num=1557
@@ -1647,6 +1649,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; use M-1, M-2 to jump between windows
 (require 'window-number)
 (window-number-meta-mode 1)
+(window-number-mode 1)
 
 ;; Below are customized by
 ;; http://www.jesshamrick.com/2012/09/18/emacs-as-a-python-ide/?utm_source=Python+Weekly+Newsletter&utm_campaign=611942dc15-Python_Weekly_Issue_107_October_3_2013&utm_medium=email&utm_term=0_9e26887fc5-611942dc15-312662625

@@ -3,16 +3,16 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "racket-edit" "racket-edit.el" (21813 8258
-;;;;;;  174267 308000))
+;;;### (autoloads nil "racket-edit" "racket-edit.el" (21813 52183
+;;;;;;  193218 773000))
 ;;; Generated autoloads from racket-edit.el
 
 (add-to-list 'hs-special-modes-alist '(racket-mode "(" ")" ";" nil nil))
 
 ;;;***
 
-;;;### (autoloads nil "racket-mode" "racket-mode.el" (21813 8258
-;;;;;;  114264 570000))
+;;;### (autoloads nil "racket-mode" "racket-mode.el" (21813 52183
+;;;;;;  123215 592000))
 ;;; Generated autoloads from racket-mode.el
 
 (autoload 'racket-mode "racket-mode" "\
@@ -29,8 +29,8 @@ Major mode for editing Racket.
 
 ;;;***
 
-;;;### (autoloads nil "racket-repl" "racket-repl.el" (21813 8258
-;;;;;;  164266 851000))
+;;;### (autoloads nil "racket-repl" "racket-repl.el" (21813 52183
+;;;;;;  183218 318000))
 ;;; Generated autoloads from racket-repl.el
 
 (autoload 'racket-repl "racket-repl" "\
@@ -52,7 +52,7 @@ Commands that don't want the REPL to be displayed can instead use
 ;;;;;;  "racket-complete.el" "racket-custom.el" "racket-font-lock.el"
 ;;;;;;  "racket-indent.el" "racket-keywords-and-builtins.el" "racket-make-doc.el"
 ;;;;;;  "racket-mode-pkg.el" "racket-profile.el" "racket-tests.el"
-;;;;;;  "racket-util.el") (21813 8258 187206 961000))
+;;;;;;  "racket-util.el") (21813 52183 225560 464000))
 
 ;;;***
 
