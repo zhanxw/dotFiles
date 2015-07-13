@@ -1,4 +1,5 @@
-#name : a skeleton file for start a script
+# name : a skeleton file for start a script
+# key : mymain
 # expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
 # --
 #!/usr/bin/env python

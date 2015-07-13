@@ -1328,8 +1328,9 @@ This command is to be used interactively."
 ;; (add-to-list 'load-path "~/emacs/yasnippet-0.6.1c")
 (require 'yasnippet)
 (setq yas-snippet-dirs
-      '("~/emacs/snippets"    ;; personal collectino
-        ))
+      (append yas-snippet-dirs
+              '("~/emacs/snippets"    ;; personal collectino
+                )))
 (yas-global-mode 1)
 
 ;; add smart-compile
