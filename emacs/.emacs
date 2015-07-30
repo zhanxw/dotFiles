@@ -1883,6 +1883,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Prompt if cpplint.py is not found
 (unless (executable-find "cpplint.py")
   (warn "Cannot find executable cpplint.py"))
+
 (eval-after-load 'flycheck
   '(progn
      (require 'flycheck-google-cpplint)

@@ -3,8 +3,9 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil nil ("flycheck-google-cpplint.el") (21678 48240
-;;;;;;  605511 777000))
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/flycheck-google-cpplint-20140806.925/flycheck-google-cpplint-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/flycheck-google-cpplint-20140806.925/flycheck-google-cpplint.el")
+;;;;;;  (21946 12369 536834 80000))
 
 ;;;***
 

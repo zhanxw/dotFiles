@@ -4,8 +4,8 @@
 
 ;; Author: Akiha Senda <senda.akiha@gmail.com>
 ;; URL: https://github.com/flycheck/flycheck-google-cpplint/
-;; Version: 20140806.925
-;; X-Original-Version: 1.0.1
+;; Package-Version: 20140806.925
+;; Version: 1.0.1
 ;; Keywords: flycheck, C, C++
 ;; Package-Requires: ((flycheck "0.20-cvs1"))
 
