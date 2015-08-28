@@ -50,6 +50,6 @@ if [[ -f .gdbinit ]]; then
     echo "GDB setting exists, skipping..."
 else
     ln -s dotFiles/gdb/.gdbinit
-    echo "GDB setting set up
+    echo "GDB setting set up"
 fi
 
