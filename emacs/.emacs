@@ -236,7 +236,8 @@
 ;; (define-key ess-mode-map "C-M-j" 'ess-eval-function-or-paragraph-and-step)
 ;; working version
 (define-key ess-mode-map [(control j)] 'my-ess-eval)
-(define-key ess-mode-map [(control meta j)] 'ess-eval-function-or-paragraph-and-step)
+;; Use the default C-c M-f instead of the following C-M-j
+;; (define-key ess-mode-map [(control meta j)] 'ess-eval-function-or-paragraph-and-step)
 
 ;; disable auto convert _ to <-
 (ess-toggle-underscore nil)
