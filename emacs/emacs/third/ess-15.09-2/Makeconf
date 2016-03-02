@@ -16,7 +16,7 @@
 ## ETCDIR          Destination of script and icon files
 ## PREFIX(DESTDIR) Directory prepended to SITELISP, INFODIR, DOCDIR & ETCDIR
 ##                 Specify either PREFIX or DESTDIR to over-ride /usr
-DESTDIR=/net/fantasia/home/zhanxw/usr
+DESTDIR=/usr
 PREFIX=$(DESTDIR)
 
 ##__ GNU Emacs __

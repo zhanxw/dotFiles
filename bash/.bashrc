@@ -233,6 +233,10 @@ function gqcdiff() {
   git difftool -y -x "colordiff -y -W $COLUMNS" HEAD^ HEAD| less -R
 }
 
+# run per-project npm
+function npm-exec {
+   $(npm bin)/$@  
+}
 
 ## clean up variables
 # Deduplicate path variables
