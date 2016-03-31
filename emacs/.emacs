@@ -46,6 +46,9 @@
 ;; maximum column number in fill-mode is 60
 (setq default-fill-column 60)
 
+;; enable subword mode by default
+(subword-mode 1)
+
 ;; Match "%" accordingly
 (global-set-key "%" 'match-paren)
 (defun match-paren (arg)
