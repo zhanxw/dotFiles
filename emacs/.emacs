@@ -1843,7 +1843,7 @@ Symbols matching the text at point are put first in the completion list."
 ;; ----------------------
 ;; Type "<prefix> ?" for more help
 ;; (require 'workgroups2)
-(use-package workgroup2
+(use-package workgroups2
   :config
   (workgroups-mode 1)  ; put this one at the bottom of .emacs
 (custom-set-faces
