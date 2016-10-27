@@ -4,7 +4,7 @@
 
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "http://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -497,7 +497,13 @@
   (add-hook 'Rnw-mode-hook
             '(lambda()
                (local-set-key [(shift return)] 'my-ess-eval)))
-
+  ;; clear ESS R console
+  (defun clear-shell ()
+    (interactive)
+    (let ((old-max comint-buffer-maximum-size))
+      (setq comint-buffer-maximum-size 0)
+      (comint-truncate-buffer)
+           (setq comint-buffer-maximum-size old-max))) 
   ;; another set of shortcuts
   ;; does not work, maybe KEY part "C-j" does not work...
   ;; (define-key ess-mode-map "C-j" 'my-ess-eval)
@@ -894,7 +900,8 @@
 
 ;; My personal keybindings
 ;; C-;   change to other window
-(global-set-key (quote [67108923]) (quote other-window))
+;(global-set-key (quote [67108923]) (quote other-window))
+(global-set-key (kbd "C-o") (quote other-window))
 ;(global-set-key (kbd "C-;") 'other-window)
 (if window-system
     (windmove-default-keybindings 'meta)
