@@ -22,3 +22,8 @@ bindkey -k F2 next
 
 defscrollback 5000
 
+# the following two lines will ensure the leading ESC sequence 
+# is not changed by GNU screen
+# i.e. keep ^[[1;2C  (not translate it to [1;2C)
+term xterm
+c1 off
