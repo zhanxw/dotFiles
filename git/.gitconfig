@@ -4,8 +4,12 @@
 [alias]
 	ci = commit
 	st = status
-	co = checkout
+    co = checkout
+    br = branch
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    type = cat-file -t
+    dump = cat-file -p
 [url "https://"]
 	insteadOf = git://
 [http]
