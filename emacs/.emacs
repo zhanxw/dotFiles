@@ -205,59 +205,59 @@
 ;; cc-mode
 ;; (require 'cc-mode)
 (use-package cc-mode
-	     :mode (("\\.h\\(h?\\|xx\\|pp\\)\\'" . c++-mode)
-		    ("\\.m\\'"                   . c-mode)
-		    ("\\.mm\\'"                  . c++-mode))
-	     :preface
-	     (defun my-build-tab-stop-list (width)
-	       (let ((num-tab-stops (/ 80 width))
-		     (counter 1)
-		     (ls nil))
-		 (while (<= counter num-tab-stops)
-		   (setq ls (cons (* width counter) ls))
-		   (setq counter (1+ counter)))
-		 (set (make-local-variable 'tab-stop-list) (nreverse ls))))
-	     ;; #if ... #endif part will become comment in font lock
-	     ;; taken from http://stackoverflow.com/questions/4549015/in-c-c-mode-in-emacs-change-face-of-code-in-if-0-endif-block-to-comment-fa
-	     (defun my-c-mode-font-lock-if0 (limit)
-	       (save-restriction
-		 (widen)
-		 (save-excursion
-		   (goto-char (point-min))
-		   (let ((depth 0) str start start-depth)
-		     (while (re-search-forward "^\\s-*#\\s-*\\(if\\|else\\|endif\\)" limit 'move)
-		       (setq str (match-string 1))
-		       (if (string= str "if")
-			   (progn
-			     (setq depth (1+ depth))
-			     (when (and (null start) (looking-at "\\s-+0"))
-			       (setq start (match-end 0)
-				     start-depth depth)))
-			 (when (and start (= depth start-depth))
-			   (c-put-font-lock-face start (match-beginning 0) 'font-lock-comment-face)
-			   (setq start nil))
-			 (when (string= str "endif")
-			   (setq depth (1- depth)))))
-		     (when (and start (> depth 0))
-		       (c-put-font-lock-face start (point) 'font-lock-comment-face)))))
-	       nil)
-	     (defun my-c-mode-common-hook ()
-	       ;; (c-set-style "k&r")
-	       ;; (setq tab-width 4) ;; change this to taste, this is what K&R uses :)
-	       (my-build-tab-stop-list tab-width)
-	       (setq c-basic-offset tab-width)
-	       (setq indent-tabs-mode nil) ;; force only spaces for indentation
-	       (local-set-key "\C-o" 'ff-get-other-file)
-	       (font-lock-add-keywords
-		nil
-		'((my-c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end)
-	       )
-	     :config
-	     (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-	     (add-hook 'c++-mode-common-hook 'my-c-mode-common-hook))
+             :mode (("\\.h\\(h?\\|xx\\|pp\\)\\'" . c++-mode)
+                    ("\\.m\\'"                   . c-mode)
+                    ("\\.mm\\'"                  . c++-mode))
+             :preface
+             (defun my-build-tab-stop-list (width)
+               (let ((num-tab-stops (/ 80 width))
+                     (counter 1)
+                     (ls nil))
+                 (while (<= counter num-tab-stops)
+                   (setq ls (cons (* width counter) ls))
+                   (setq counter (1+ counter)))
+                 (set (make-local-variable 'tab-stop-list) (nreverse ls))))
+             ;; #if ... #endif part will become comment in font lock
+             ;; taken from http://stackoverflow.com/questions/4549015/in-c-c-mode-in-emacs-change-face-of-code-in-if-0-endif-block-to-comment-fa
+             (defun my-c-mode-font-lock-if0 (limit)
+               (save-restriction
+                 (widen)
+                 (save-excursion
+                   (goto-char (point-min))
+                   (let ((depth 0) str start start-depth)
+                     (while (re-search-forward "^\\s-*#\\s-*\\(if\\|else\\|endif\\)" limit 'move)
+                       (setq str (match-string 1))
+                       (if (string= str "if")
+                           (progn
+                             (setq depth (1+ depth))
+                             (when (and (null start) (looking-at "\\s-+0"))
+                               (setq start (match-end 0)
+                                     start-depth depth)))
+                         (when (and start (= depth start-depth))
+                           (c-put-font-lock-face start (match-beginning 0) 'font-lock-comment-face)
+                           (setq start nil))
+                         (when (string= str "endif")
+                           (setq depth (1- depth)))))
+                     (when (and start (> depth 0))
+                       (c-put-font-lock-face start (point) 'font-lock-comment-face)))))
+               nil)
+             (defun my-c-mode-common-hook ()
+               ;; (c-set-style "k&r")
+               ;; (setq tab-width 4) ;; change this to taste, this is what K&R uses :)
+               (my-build-tab-stop-list tab-width)
+               (setq c-basic-offset tab-width)
+               (setq indent-tabs-mode nil) ;; force only spaces for indentation
+               (local-set-key "\C-o" 'ff-get-other-file)
+               (font-lock-add-keywords
+                nil
+                '((my-c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end)
+               )
+             :config
+             (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+             (add-hook 'c++-mode-common-hook 'my-c-mode-common-hook))
 
 (use-package google-c-style
-	     :config
+             :config
   (add-hook 'c-mode-common-hook 'google-set-c-style)
   (add-hook 'c-mode-common-hook 'google-make-newline-indent))
 
@@ -402,11 +402,11 @@
 ;; (add-to-list 'load-path "~/emacs")
 ;; (require 'smart-compile)
 (use-package smart-compile
-	     :disabled t
-	     :commands smart-compile
-	     :bind (("C-c c" . smart-compile)
-		    ("A-n"   . next-error)
-		             ("A-p"   . previous-error)))
+             :disabled t
+             :commands smart-compile
+             :bind (("C-c c" . smart-compile)
+                    ("A-n"   . next-error)
+                             ("A-p"   . previous-error)))
 
 ;; Config flychecker-google-cpplint
 ;; Prompt if cpplint.py is not found
@@ -426,13 +426,14 @@
   :defer 5
   :config
   (progn
-     (require 'flycheck-google-cpplint)
-     ;; Add Google C++ Style checker.
-     ;; In default, syntax checked by Clang and Cppcheck.
-     (custom-set-variables
-      '(flycheck-googlelint-filter "-legal"))
-     (flycheck-add-next-checker 'c/c++-gcc
-                                'c/c++-googlelint 'append)))
+    (add-to-list 'load-path "~/emacs/third/flycheck-google-cpplint")
+    (require 'flycheck-google-cpplint)
+    ;; Add Google C++ Style checker.
+    ;; In default, syntax checked by Clang and Cppcheck.
+    (custom-set-variables
+     '(flycheck-googlelint-filter "-legal"))
+    (flycheck-add-next-checker 'c/c++-gcc
+                               'c/c++-googlelint 'append)))
 
 ;; clang-format
 ;; (setq clang-format-sytle 'google)
@@ -610,86 +611,86 @@
 ;; smartparens
 ;; https://github.com/Fuco1/smartparens/wiki/Example-configuration
 (use-package smartparens
-	     :disabled t
-	     :commands (smartparens-global-mode show-smartparens-global-mode)
-	     :config
-	     (use-package smartparens-config)
+             :disabled t
+             :commands (smartparens-global-mode show-smartparens-global-mode)
+             :config
+             (use-package smartparens-config)
 ;;;;;;;;;;;;;;;;;;;;;;;;
-	     ;; keybinding management
+             ;; keybinding management
 
-	     (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
-	     (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
+             (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
+             (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
 
-	     (define-key sp-keymap (kbd "C-M-d") 'sp-down-sexp)
-	     (define-key sp-keymap (kbd "C-M-a") 'sp-backward-down-sexp)
-	     (define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
-	     (define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
+             (define-key sp-keymap (kbd "C-M-d") 'sp-down-sexp)
+             (define-key sp-keymap (kbd "C-M-a") 'sp-backward-down-sexp)
+             (define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
+             (define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
 
-	     (define-key sp-keymap (kbd "C-M-e") 'sp-up-sexp)
-	     (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
-	     (define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
-	     (define-key sp-keymap (kbd "C-M-t") 'sp-transpose-sexp)
+             (define-key sp-keymap (kbd "C-M-e") 'sp-up-sexp)
+             (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
+             (define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
+             (define-key sp-keymap (kbd "C-M-t") 'sp-transpose-sexp)
 
-	     (define-key sp-keymap (kbd "C-M-n") 'sp-next-sexp)
-	     (define-key sp-keymap (kbd "C-M-p") 'sp-previous-sexp)
+             (define-key sp-keymap (kbd "C-M-n") 'sp-next-sexp)
+             (define-key sp-keymap (kbd "C-M-p") 'sp-previous-sexp)
 
-	     (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
-	     (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
+             (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
+             (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
 
-	     (define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
-	     (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
+             (define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
+             (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
 
-	     (define-key sp-keymap (kbd "C-<right>") 'sp-forward-slurp-sexp)
-	     (define-key sp-keymap (kbd "C-<left>") 'sp-forward-barf-sexp)
-	     (define-key sp-keymap (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
-	     (define-key sp-keymap (kbd "C-M-<right>") 'sp-backward-barf-sexp)
+             (define-key sp-keymap (kbd "C-<right>") 'sp-forward-slurp-sexp)
+             (define-key sp-keymap (kbd "C-<left>") 'sp-forward-barf-sexp)
+             (define-key sp-keymap (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
+             (define-key sp-keymap (kbd "C-M-<right>") 'sp-backward-barf-sexp)
 
-	     (define-key sp-keymap (kbd "M-D") 'sp-splice-sexp)
-	     (define-key sp-keymap (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
-	     (define-key sp-keymap (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
-	     (define-key sp-keymap (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
+             (define-key sp-keymap (kbd "M-D") 'sp-splice-sexp)
+             (define-key sp-keymap (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
+             (define-key sp-keymap (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
+             (define-key sp-keymap (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
 
-	     (define-key sp-keymap (kbd "C-]") 'sp-select-next-thing-exchange)
-	     (define-key sp-keymap (kbd "C-<left_bracket>") 'sp-select-previous-thing)
-	     (define-key sp-keymap (kbd "C-M-]") 'sp-select-next-thing)
+             (define-key sp-keymap (kbd "C-]") 'sp-select-next-thing-exchange)
+             (define-key sp-keymap (kbd "C-<left_bracket>") 'sp-select-previous-thing)
+             (define-key sp-keymap (kbd "C-M-]") 'sp-select-next-thing)
 
-	     (define-key sp-keymap (kbd "M-F") 'sp-forward-symbol)
-	     (define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
+             (define-key sp-keymap (kbd "M-F") 'sp-forward-symbol)
+             (define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
 
-	     (define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
-	     (define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
-	     (define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)
-	     (define-key sp-keymap (kbd "H-s a") 'sp-absorb-sexp)
-	     (define-key sp-keymap (kbd "H-s e") 'sp-emit-sexp)
-	     (define-key sp-keymap (kbd "H-s p") 'sp-add-to-previous-sexp)
-	     (define-key sp-keymap (kbd "H-s n") 'sp-add-to-next-sexp)
-	     (define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
-	     (define-key sp-keymap (kbd "H-s s") 'sp-split-sexp)
+             (define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
+             (define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
+             (define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)
+             (define-key sp-keymap (kbd "H-s a") 'sp-absorb-sexp)
+             (define-key sp-keymap (kbd "H-s e") 'sp-emit-sexp)
+             (define-key sp-keymap (kbd "H-s p") 'sp-add-to-previous-sexp)
+             (define-key sp-keymap (kbd "H-s n") 'sp-add-to-next-sexp)
+             (define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
+             (define-key sp-keymap (kbd "H-s s") 'sp-split-sexp)
 
 ;;;;;;;;;;;;;;;;;;
-	     ;; pair management
+             ;; pair management
 
-	     (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+             (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
 
 ;;; markdown-mode
-	     (sp-with-modes '(markdown-mode gfm-mode rst-mode)
-			    (sp-local-pair "*" "*" :bind "C-*")
-			    (sp-local-tag "2" "**" "**")
-			    (sp-local-tag "s" "```scheme" "```")
-			    (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
+             (sp-with-modes '(markdown-mode gfm-mode rst-mode)
+                            (sp-local-pair "*" "*" :bind "C-*")
+                            (sp-local-tag "2" "**" "**")
+                            (sp-local-tag "s" "```scheme" "```")
+                            (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
 
 ;;; tex-mode latex-mode
-	     (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
-			    (sp-local-tag "i" "\"<" "\">"))
+             (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
+                            (sp-local-tag "i" "\"<" "\">"))
 
 ;;; html-mode
-	     (sp-with-modes '(html-mode sgml-mode)
-			    (sp-local-pair "<" ">"))
+             (sp-with-modes '(html-mode sgml-mode)
+                            (sp-local-pair "<" ">"))
 
 ;;; lisp modes
-	     (sp-with-modes sp--lisp-modes
-			    (sp-local-pair "(" nil :bind "C-("))
-	     )
+             (sp-with-modes sp--lisp-modes
+                            (sp-local-pair "(" nil :bind "C-("))
+             )
 
 ;; ;; ------ begin ------
 ;; ;;;;;;;;;
@@ -711,9 +712,9 @@
 ;; C-c C-r         python-shell-send-region
 ;; C-c C-z         python-shell-switch-to-shell
 (use-package python-mode
-	     :mode ("\\.py\\'" . python-mode)
-	     :interpreter ("python" . python-mode)
-	     :config
+             :mode ("\\.py\\'" . python-mode)
+             :interpreter ("python" . python-mode)
+             :config
 (setq
  python-shell-interpreter "ipython"
  python-shell-interpreter-args ""
@@ -789,13 +790,13 @@
 ;;     (add-hook hook 'hs-minor-mode)))
 ;; (global-set-key "t" (quote hs-toggle-hiding))
 (use-package hideshow
-	     :bind
-	     ("C-c t" . hs-toggle-hiding)
-	     :config
-	     (when (featurep 'hideshow)
-	       (dolist (hook '(c++-mode-hook c-mode-hook emacs-lisp-mode-hook
-					     cperl-mode-hook))
-		 (add-hook hook 'hs-minor-mode))))
+             :bind
+             ("C-c t" . hs-toggle-hiding)
+             :config
+             (when (featurep 'hideshow)
+               (dolist (hook '(c++-mode-hook c-mode-hook emacs-lisp-mode-hook
+                                             cperl-mode-hook))
+                 (add-hook hook 'hs-minor-mode))))
 
 ;; set up ^C-o a prefix for outline mode
 ;; useful commands:
@@ -1611,10 +1612,10 @@ Symbols matching the text at point are put first in the completion list."
 
 ;; (require 'recentf)
 (use-package recentf
-	     :defer 10
-	     :commands (recentf-mode
-			recentf-add-file
-			recentf-apply-filename-handlers)
+             :defer 10
+             :commands (recentf-mode
+                        recentf-add-file
+                        recentf-apply-filename-handlers)
 :config
 (setq recentf-max-saved-items 100)
 ;; from emacs wiki http://www.emacswiki.org/emacs/RecentFiles#toc7
@@ -1651,7 +1652,7 @@ Symbols matching the text at point are put first in the completion list."
 ;;; send region or current line to shell
 ;;(require 'sh-script)
 (use-package sh-script
-	     :defer t
+             :defer t
   :config
 ;;; http://stackoverflow.com/questions/6286579/emacs-shell-mode-how-to-send-region-to-shell
 (defun sh-send-line-or-region (&optional step)
@@ -1826,6 +1827,12 @@ Symbols matching the text at point are put first in the completion list."
   :config
   (global-anzu-mode 1))
 
+;; auto-update-update
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (auto-package-update-at-time "03:00")
+  (auto-package-update-maybe))
 
 ;;Startup
 (split-window-vertically)   ;; want two windows at startup
