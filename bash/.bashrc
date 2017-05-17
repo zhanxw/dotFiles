@@ -90,18 +90,18 @@ function __prompt_command()
 {
     # capture the exit status of the last command
     EXIT="$?"
-    PS1=""
+    PS1_PROMPT=""
  
-    if [ $EXIT -eq 0 ]; then PS1+="\[$Green\][\!]\[$Color_Off\] "; else PS1+="\[$Red\][\!]\[$Color_Off\] "; fi
+    if [ $EXIT -eq 0 ]; then PS1_PROMPT+="\[$Green\][\!]\[$Color_Off\] "; else PS1+="\[$Red\][\!]\[$Color_Off\] "; fi
  
     # # if logged in via ssh shows the ip of the client
-    # if [ -n "$SSH_CLIENT" ]; then PS1+="\[$Yellow\]("${SSH_CLIENT%% *}")\[$Color_Off\]"; fi
+    # if [ -n "$SSH_CLIENT" ]; then PS1_PROMPT+="\[$Yellow\]("${SSH_CLIENT%% *}")\[$Color_Off\]"; fi
  
     # debian chroot stuff (take it or leave it)
-    PS1+="${debian_chroot:+($debian_chroot)}"
+    PS1_PROMPT+="${debian_chroot:+($debian_chroot)}"
  
     # basic information (user@host:path)
-    PS1+="\[$LightCyan\]\u@\[$Color_Off\]\[$LightRed\]\h\[$Color_Off\]: \[$LightGreen\]\w\[$Color_Off\]"
+    PS1_PROMPT+="\[$LightCyan\]\u@\[$Color_Off\]\[$LightRed\]\h\[$Color_Off\]: \[$LightGreen\]\w\[$Color_Off\]"
  
     # check if inside git repo
     local git_status="`git status -unormal 2>&1`"    
@@ -123,11 +123,11 @@ function __prompt_command()
         fi
  
         # add the result to prompt
-        PS1+=" \[${Color_On}\][${branch}]\[${Color_Off}\] "
+        PS1_PROMPT+=" \[${Color_On}\][${branch}]\[${Color_Off}\] "
     fi
  
     # prompt $ or # for root
-    PS1+="\[${LightGreen}\]> \[${Color_Off}\]"
+    PS1_PROMPT+="\[${LightGreen}\]> \[${Color_Off}\]"
     
     # set application title
     if [ "$TERM" != "dumb" ]; then
@@ -144,6 +144,7 @@ function __prompt_command()
         fi
         echo -ne '\033k'$mytitle'\033\\'
     fi
+    export PS1=${PS1_PROMPT}
 }
 PROMPT_COMMAND=__prompt_command
 
