@@ -295,85 +295,85 @@
              ))
 
 
-;; gtags
-;; from http://www.newsmth.net/bbscon.php?bid=573&id=84691&ftype=3&num=1557
-;; (add-to-list 'load-path "~/software/global/share/gtags")
-;; set TAGS directory
-(setq tags-table-list '("." ".." "../.."))
-(autoload 'gtags-mode "gtags" "" t)
-
-(add-hook 'c-mode-hook
-          '(lambda ()
-             (gtags-mode 1)))
-(add-hook 'c++-mode-hook
-          '(lambda ()
-             (gtags-mode 1)))
-
-(add-hook 'asm-mode-hook
-          '(lambda ()
-             (gtags-mode 1)))
-
-;;  from http://www.emacswiki.org/emacs/GnuGlobal
-(defun gtags-root-dir ()
-  "Returns GTAGS root directory or nil if doesn't exist."
-  (with-temp-buffer
-    (if (zerop (call-process "global" nil t nil "-pr"))
-        (buffer-substring (point-min) (1- (point-max)))
-      nil)))
-
-;; from http://emacs-fu.blogspot.com/2009/01/navigating-through-source-code-using.html
-(defun gtags-update ()
-  "create or update the gnu global tag file"
-  (interactive)
-  (if (not (= 0 (call-process "global" nil nil nil " -p"))) ; tagfile doesn't exist?
-      (let ((olddir default-directory)
-            (topdir (read-directory-name
-                     "gtags: top of source tree:" default-directory)))
-        (cd topdir)
-        (shell-command "gtags && echo 'created tagfile'")
-        (cd olddir)) ; restore
-    ;;  tagfile already exists; update it
-    (shell-command "global -u && echo 'updated tagfile'")))
-
-;; from: http://www.emacswiki.org/emacs/GnuGlobal
-(defun gtags-update-single(filename)
-  "Update Gtags database for changes in a single file"
-  (interactive)
-  (start-process "update-gtags" "update-gtags" "bash" "-c" (concat "cd " (gtags-root-dir) " ; gtags --single-update " filename )))
-
-(defun gtags-update-current-file()
-  (interactive)
-  (defvar filename)
-  (setq filename (replace-regexp-in-string (gtags-root-dir) "." (buffer-file-name (current-buffer))))
-  (gtags-update-single filename)
-  (message "Gtags updated for %s" filename))
-(defun gtags-update-hook()
-  "Update GTAGS file incrementally upon saving a file"
-  (when gtags-mode
-    (when (gtags-root-dir)
-      (gtags-update-current-file))))
-(add-hook 'after-save-hook 'gtags-update-hook)
-
-;; from: http://www.emacswiki.org/emacs/CyclingGTagsResult
-(defun ww-next-gtag ()
-  "Find next matching tag, for GTAGS."
-  (interactive)
-  (let ((latest-gtags-buffer
-         (car (delq nil  (mapcar (lambda (x) (and (string-match "GTAGS SELECT" (buffer-name x)) (buffer-name x)) )
-                                 (buffer-list)) ))))
-    (cond (latest-gtags-buffer
-           (switch-to-buffer latest-gtags-buffer)
-           (next-line)
-           (gtags-select-it nil))
-          ) ))
-
-;; convenient setting
-(gtags-mode 1)
-(global-set-key "\M-;" 'ww-next-gtag)   ;; M-; cycles to next result, after doing M-. C-M-. or C-M-,
-(global-set-key "\M-." 'gtags-find-tag) ;; M-. finds tag
-(global-set-key (kbd "C-M-.") 'gtags-find-rtag)   ;; C-M-. find all references of tag
-(global-set-key (kbd "C-M-,") 'gtags-find-symbol) ;; C-M-, find all usages of symbol.
-(define-key gtags-mode-map "\e," 'gtags-find-tag-from-here)
+;; ;; gtags
+;; ;; from http://www.newsmth.net/bbscon.php?bid=573&id=84691&ftype=3&num=1557
+;; ;; (add-to-list 'load-path "~/software/global/share/gtags")
+;; ;; set TAGS directory
+;; (setq tags-table-list '("." ".." "../.."))
+;; (autoload 'gtags-mode "gtags" "" t)
+;; 
+;; (add-hook 'c-mode-hook
+;;           '(lambda ()
+;;              (gtags-mode 1)))
+;; (add-hook 'c++-mode-hook
+;;           '(lambda ()
+;;              (gtags-mode 1)))
+;; 
+;; (add-hook 'asm-mode-hook
+;;           '(lambda ()
+;;              (gtags-mode 1)))
+;; 
+;; ;;  from http://www.emacswiki.org/emacs/GnuGlobal
+;; (defun gtags-root-dir ()
+;;   "Returns GTAGS root directory or nil if doesn't exist."
+;;   (with-temp-buffer
+;;     (if (zerop (call-process "global" nil t nil "-pr"))
+;;         (buffer-substring (point-min) (1- (point-max)))
+;;       nil)))
+;; 
+;; ;; from http://emacs-fu.blogspot.com/2009/01/navigating-through-source-code-using.html
+;; (defun gtags-update ()
+;;   "create or update the gnu global tag file"
+;;   (interactive)
+;;   (if (not (= 0 (call-process "global" nil nil nil " -p"))) ; tagfile doesn't exist?
+;;       (let ((olddir default-directory)
+;;             (topdir (read-directory-name
+;;                      "gtags: top of source tree:" default-directory)))
+;;         (cd topdir)
+;;         (shell-command "gtags && echo 'created tagfile'")
+;;         (cd olddir)) ; restore
+;;     ;;  tagfile already exists; update it
+;;     (shell-command "global -u && echo 'updated tagfile'")))
+;; 
+;; ;; from: http://www.emacswiki.org/emacs/GnuGlobal
+;; (defun gtags-update-single(filename)
+;;   "Update Gtags database for changes in a single file"
+;;   (interactive)
+;;   (start-process "update-gtags" "update-gtags" "bash" "-c" (concat "cd " (gtags-root-dir) " ; gtags --single-update " filename )))
+;; 
+;; (defun gtags-update-current-file()
+;;   (interactive)
+;;   (defvar filename)
+;;   (setq filename (replace-regexp-in-string (gtags-root-dir) "." (buffer-file-name (current-buffer))))
+;;   (gtags-update-single filename)
+;;   (message "Gtags updated for %s" filename))
+;; (defun gtags-update-hook()
+;;   "Update GTAGS file incrementally upon saving a file"
+;;   (when gtags-mode
+;;     (when (gtags-root-dir)
+;;       (gtags-update-current-file))))
+;; (add-hook 'after-save-hook 'gtags-update-hook)
+;; 
+;; ;; from: http://www.emacswiki.org/emacs/CyclingGTagsResult
+;; (defun ww-next-gtag ()
+;;   "Find next matching tag, for GTAGS."
+;;   (interactive)
+;;   (let ((latest-gtags-buffer
+;;          (car (delq nil  (mapcar (lambda (x) (and (string-match "GTAGS SELECT" (buffer-name x)) (buffer-name x)) )
+;;                                  (buffer-list)) ))))
+;;     (cond (latest-gtags-buffer
+;;            (switch-to-buffer latest-gtags-buffer)
+;;            (next-line)
+;;            (gtags-select-it nil))
+;;           ) ))
+;; 
+;; ;; convenient setting
+;; (gtags-mode 1)
+;; (global-set-key "\M-;" 'ww-next-gtag)   ;; M-; cycles to next result, after doing M-. C-M-. or C-M-,
+;; (global-set-key "\M-." 'gtags-find-tag) ;; M-. finds tag
+;; (global-set-key (kbd "C-M-.") 'gtags-find-rtag)   ;; C-M-. find all references of tag
+;; (global-set-key (kbd "C-M-,") 'gtags-find-symbol) ;; C-M-, find all usages of symbol.
+;; (define-key gtags-mode-map "\e," 'gtags-find-tag-from-here)
 
 
 ;; Try yet-another-snnipet
@@ -733,31 +733,32 @@
 (add-hook 'python-mode-hook
           (lambda ()
                 (setq imenu-create-index-function 'python-imenu-create-index)))
-;; ;; Pymacs + Ropemacs
 
-;; Ropemacs
-;; (require 'pymacs)
-;; (pymacs-load "ropemacs" "rope-") ; note this line will make 'M-x help' function disabled
-;; so we use hook function as below
-(defun load-ropemacs ()
-  "Load pymacs and ropemacs"
-  (interactive)
-                                        ;(setenv "PYMACS_PYTHON" "python2.5") ; disabled for now
-                                        ; (require 'python-mode)
-  (require 'pymacs)
-  (autoload 'pymacs-apply "pymacs")
-  (autoload 'pymacs-call "pymacs")
-  (autoload 'pymacs-eval "pymacs" nil t)
-  (autoload 'pymacs-exec "pymacs" nil t)
-  (autoload 'pymacs-load "pymacs" nil t)
-  ;; (eval-after-load "pymacs"
-  ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
-  (pymacs-load "ropemacs" "rope-")
-  ;; (setq rope-confirm-saving 'nil)
-  ;; (ropemacs-mode t)
-  ;; (local-set-key [(meta ?/)] 'rope-code-assist) ;; avoid rope start for C++ file
-  )
-(add-hook 'python-mode-hook 'load-ropemacs)
+;; Disable Pymacs + Ropemacs as it is infrequently used
+;; ;; ;; Pymacs + Ropemacs
+;; ;; Ropemacs
+;; ;; (require 'pymacs)
+;; ;; (pymacs-load "ropemacs" "rope-") ; note this line will make 'M-x help' function disabled
+;; ;; so we use hook function as below
+;; (defun load-ropemacs ()
+;;   "Load pymacs and ropemacs"
+;;   (interactive)
+;;                                         ;(setenv "PYMACS_PYTHON" "python2.5") ; disabled for now
+;;                                         ; (require 'python-mode)
+;;   (require 'pymacs)
+;;   (autoload 'pymacs-apply "pymacs")
+;;   (autoload 'pymacs-call "pymacs")
+;;   (autoload 'pymacs-eval "pymacs" nil t)
+;;   (autoload 'pymacs-exec "pymacs" nil t)
+;;   (autoload 'pymacs-load "pymacs" nil t)
+;;   ;; (eval-after-load "pymacs"
+;;   ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
+;;   (pymacs-load "ropemacs" "rope-")
+;;   ;; (setq rope-confirm-saving 'nil)
+;;   ;; (ropemacs-mode t)
+;;   ;; (local-set-key [(meta ?/)] 'rope-code-assist) ;; avoid rope start for C++ file
+;;   )
+;; (add-hook 'python-mode-hook 'load-ropemacs)
 
 ;; automatically convert tab to spaces for python
 (defun my-python-mode-common-hook ()
@@ -2345,3 +2346,18 @@ Symbols matching the text at point are put first in the completion list."
 ;;                        'c++-tempo-tags)
 ;; 
 ;; 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flycheck-googlelint-filter "-legal")
+ '(package-selected-packages
+   (quote
+    (counsel ggtags yasnippet yaml-mode workgroups2 window-number use-package undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython iedit htmlize highlight-chars gtags google-c-style go-mode git-gutter git-commit git flycheck fill-column-indicator expand-region ess dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ag ace-jump-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
