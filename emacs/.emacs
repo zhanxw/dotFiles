@@ -1768,18 +1768,18 @@ Symbols matching the text at point are put first in the completion list."
 
 
 
-;; fill-column-indicator
-;; fci-rule-column
-;; (add-to-list 'load-path "~/emacs/fill-column-indicator-1.83")
-;; (require 'fill-column-indicator)
-(use-package fill-column-indicator
-  :config
-(setq-default fci-rule-column 80)
-(define-globalized-minor-mode
-  global-fci-mode fci-mode (lambda () (fci-mode 1)))
-(global-fci-mode t)
-)
-;; (global-fci-mode 0)
+;; ;; fill-column-indicator
+;; ;; fci-rule-column
+;; ;; (add-to-list 'load-path "~/emacs/fill-column-indicator-1.83")
+;; ;; (requiUre 'fill-column-indicator)
+;; (use-package fill-column-indicator
+;;   :config
+;; (setq-default fci-rule-column 80)
+;; (define-globalized-minor-mode
+;;   global-fci-mode fci-mode (lambda () (fci-mode 1)))
+;; (global-fci-mode t)
+;; )
+;; ;; (global-fci-mode 0)
 
 
 ;; show TABs by default
@@ -2354,7 +2354,7 @@ Symbols matching the text at point are put first in the completion list."
  '(flycheck-googlelint-filter "-legal")
  '(package-selected-packages
    (quote
-    (counsel ggtags yasnippet yaml-mode workgroups2 window-number use-package undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython iedit htmlize highlight-chars gtags google-c-style go-mode git-gutter git-commit git flycheck fill-column-indicator expand-region ess dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ag ace-jump-mode))))
+    (counsel ggtags yasnippet yaml-mode workgroups2 window-number use-package undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython iedit htmlize highlight-chars gtags google-c-style go-mode git-gutter git-commit git flycheck expand-region ess dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ag ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
