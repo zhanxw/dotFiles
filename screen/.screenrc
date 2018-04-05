@@ -27,3 +27,4 @@ defscrollback 5000
 # i.e. keep ^[[1;2C  (not translate it to [1;2C)
 term xterm
 c1 off
+

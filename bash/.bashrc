@@ -24,6 +24,9 @@ alias noheader='grep -v "^#"'
 alias sds='echo $DISPLAY > ~/.DISPLAY'
 alias lds='export DISPLAY=`cat ~/.DISPLAY`'
 
+# better git status
+alias gll="git log --graph --oneline --abbrev-commit --decorate --all"
+
 alias ..="cd .."
 alias ..2="cd ../.."
 alias ..3="cd ../../.."

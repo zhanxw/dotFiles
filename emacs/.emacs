@@ -518,7 +518,7 @@
   ;; disable auto convert _ to <-
   (ess-toggle-underscore nil)
   ;; align '#', '##' the same way
-  (setq ess-fancy-comments nil)
+  (setq ess-indent-with-fancy-comments nil)
 
                                         ; Enable which-func
   (which-func-mode)
@@ -1759,7 +1759,7 @@ Symbols matching the text at point are put first in the completion list."
 (use-package whitespace
   :config
 (setq whitespace-line-column 80) ;; limit line length
-(setq whitespace-style '(face lines-tail))
+(setq whitespace-style '(face lines-tail tabs))
 (add-hook 'prog-mode-hook 'whitespace-mode))
 
 ;; undo-tree
@@ -1783,12 +1783,15 @@ Symbols matching the text at point are put first in the completion list."
 ;; )
 ;; ;; (global-fci-mode 0)
 
+;; ;; use white-space mode to highlight tab and thus disable the following
+;; ;; show TABs by default
+;; ;; (require 'highlight-chars)
+;; (use-package highlight-chars
+;;   :config
+;;   (add-to-list 'load-path "~/emacs/third")
+;;   (require 'highlight-chars)
+;;   (add-hook 'font-lock-mode-hook 'hc-highlight-tabs))
 
-;; show TABs by default
-;; (require 'highlight-chars)
-(use-package highlight-chars
-  :config
-(add-hook 'font-lock-mode-hook 'hc-highlight-tabs))
 ;; ------ end ------
 
 
@@ -1836,6 +1839,11 @@ Symbols matching the text at point are put first in the completion list."
   (setq auto-package-update-delete-old-versions t)
   (auto-package-update-at-time "03:00")
   (auto-package-update-maybe))
+
+;; wakatime
+(use-package wakatime-mode
+  :config
+  (global-wakatime-mode t))
 
 ;;Startup
 (split-window-vertically)   ;; want two windows at startup
@@ -2356,7 +2364,7 @@ Symbols matching the text at point are put first in the completion list."
  '(flycheck-googlelint-filter "-legal")
  '(package-selected-packages
    (quote
-    (web-mode column-marker counsel ggtags yasnippet yaml-mode workgroups2 window-number use-package undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython iedit htmlize highlight-chars gtags google-c-style go-mode git-gutter git-commit git flycheck expand-region ess dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ag ace-jump-mode))))
+    (wakatime-mode magit web-mode column-marker counsel ggtags yasnippet yaml-mode workgroups2 window-number use-package undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython iedit htmlize gtags google-c-style go-mode git-gutter git-commit git flycheck expand-region ess dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
