@@ -1833,16 +1833,19 @@ Symbols matching the text at point are put first in the completion list."
   :config
   (global-anzu-mode 1))
 
-;; auto-update-update
-(use-package auto-package-update
-  :config
-  (setq auto-package-update-delete-old-versions t)
-  (auto-package-update-at-time "03:00")
-  (auto-package-update-maybe))
+;; Do not automatically update packages
+;; that cause disaters for machines behind firewalls
+;; ;; auto-package-update
+;; (use-package auto-package-update
+;;   :config
+;;   (setq auto-package-update-delete-old-versions t)
+;;   (auto-package-update-at-time "03:00")
+;;   (auto-package-update-maybe))
 
 ;; wakatime
 (use-package wakatime-mode
   :config
+  (custom-set-variables '(wakatime-api-key "3a6341fc-ca1c-425a-a0ab-52da157cc2e8"))
   (global-wakatime-mode t))
 
 ;;Startup
