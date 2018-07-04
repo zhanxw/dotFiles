@@ -517,6 +517,9 @@
 
   ;; disable auto convert _ to <-
   (ess-toggle-underscore nil)
+  (ess-toggle-S-assign nil)
+  (ess-toggle-S-assign nil)
+
   ;; align '#', '##' the same way
   (setq ess-indent-with-fancy-comments nil)
 
