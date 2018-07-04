@@ -21,28 +21,13 @@ NOTE: For MacOS users, posframe need Emacs (version >= 26.0.91)
 
 *** Create a posframe
 
-**** Simple way
 #+BEGIN_EXAMPLE
-NOTE: buffers prefixed with space will be not showed in buffer-list.
 (posframe-show " *my-posframe-buffer*"
                :string "This is a test"
                :position (point))
 #+END_EXAMPLE
 
-**** Advanced way
-#+BEGIN_EXAMPLE
-(defvar my-posframe-buffer " *my-posframe-buffer*")
-
-(with-current-buffer (get-buffer-create my-posframe-buffer)
-  (erase-buffer)
-  (insert "Hello world"))
-
-(posframe-show my-posframe-buffer
-               :position (point))
-#+END_EXAMPLE
-
-**** Arguments
-
+Arguments documents:
 #+BEGIN_EXAMPLE
 C-h f posframe-show
 #+END_EXAMPLE
