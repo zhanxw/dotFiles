@@ -2397,7 +2397,7 @@ Symbols matching the text at point are put first in the completion list."
  '(flycheck-googlelint-filter "-legal")
  '(package-selected-packages
    (quote
-    (iedit wakatime-mode magit column-marker yaml-mode workgroups2 window-number undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython htmlize gtags google-c-style go-mode git-gutter git-commit git expand-region dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ace-jump-mode)))
+    (yasnippet-snippets yasnippet iedit wakatime-mode magit column-marker yaml-mode workgroups2 window-number undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython htmlize gtags google-c-style go-mode git-gutter git-commit git expand-region dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ace-jump-mode)))
  '(wakatime-api-key "3a6341fc-ca1c-425a-a0ab-52da157cc2e8"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
