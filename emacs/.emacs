@@ -2,25 +2,29 @@
 ;; (require 'benchmark-init-loaddefs)
 ;; (benchmark-init/activate)
 
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-;; Add the original Emacs Lisp Package Archive
-(add-to-list 'package-archives
-             '("elpa" . "http://tromey.com/elpa/"))
-;; ;; Add the user-contributed repository
-;; (add-to-list 'package-archives
-;;              '("marmalade" . "https://marmalade-repo.org/packages/"))
 ;; Within Emacs, use M-x list-packages to list all packages which will
 ;; automatically refresh the archive contents. Afterwards use U to mark all
 ;; upgradable packages to be upgraded, and x to actually perform the new updates.
 ;; Emacs will then fetch and install all upgrades, and ask you to whether to
 ;; remove the old, obsolete versions afterwards.
 (package-initialize)
-
+(require 'package)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (when no-ssl
+        (warn "\Your version of Emacs does not support SSL connections,
+which is unsafe because it allows man-in-the-middle attacks.
+There are two things you can do about this warning:
+1. Install an Emacs version that does support SSL and be safe.
+2. Remove this warning from your init file so you won't see it again."))
+  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  (when (< emacs-major-version 24)
+    ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+(package-initialize)
 
 ;; use-package
 (add-to-list 'load-path "~/emacs")
@@ -457,109 +461,109 @@
 ;;  :load-path "~/emacs/third/ess/lisp"
   :commands R
   :config
-  ;; customize ESS
-  ;; http://www.kieranhealy.org/blog/archives/2009/10/12/make-shift-enter-do-a-lot-in-ess/
-  ;; Adapted with one minor change from Felipe Salazar at
-  ;; http://www.emacswiki.org/emacs/EmacsSpeaksStatistics
-  (setq ess-ask-for-ess-directory nil)
-  (setq ess-local-process-name "R")
-  (setq ansi-color-for-comint-mode 'filter)
-  (setq comint-scroll-to-bottom-on-input t)
-  (setq comint-scroll-to-bottom-on-output t)
-  (setq comint-move-point-for-output t)
-  (defun my-ess-start-R ()
-    (interactive)
-    (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
-        (progn
-          (delete-other-windows)
-          (setq w1 (selected-window))
-          (setq w1name (buffer-name))
-          (setq w2 (split-window w1 nil t))
-          (R)
-          (set-window-buffer w2 "*R*")
-          (set-window-buffer w1 w1name))))
-  (defun my-ess-eval ()
-    (interactive)
-    (my-ess-start-R)
-    (if (and transient-mark-mode mark-active)
-        (call-interactively 'ess-eval-region)
-      (call-interactively 'ess-eval-line-and-step)))
-  (add-hook 'ess-mode-hook
-            '(lambda()
-               (local-set-key [(shift return)] 'my-ess-eval)))
-  ;; also bind C-return,
-  ;; See http://www.nongnu.org/emacs-tiny-tools/keybindings/ 3.1
-  ;; for why we cannot Shift-Return in terminal mode emacs
-  (add-hook 'ess-mode-hook
-            '(lambda()
-               (local-set-key [C-j] 'my-ess-eval)))
-  (add-hook 'inferior-ess-mode-hook
-            '(lambda()
-               (local-set-key [C-up] 'comint-previous-input)
-               (local-set-key [C-down] 'comint-next-input)))
-  (add-hook 'Rnw-mode-hook
-            '(lambda()
-               (local-set-key [(shift return)] 'my-ess-eval)))
-  ;; clear ESS R console
-  (defun clear-shell ()
-    (interactive)
-    (let ((old-max comint-buffer-maximum-size))
-      (setq comint-buffer-maximum-size 0)
-      (comint-truncate-buffer)
-           (setq comint-buffer-maximum-size old-max))) 
-  ;; another set of shortcuts
-  ;; does not work, maybe KEY part "C-j" does not work...
-  ;; (define-key ess-mode-map "C-j" 'my-ess-eval)
-  ;; (define-key ess-mode-map "C-M-j" 'ess-eval-function-or-paragraph-and-step)
-  ;; working version
-  (define-key ess-mode-map [(control j)] 'my-ess-eval)
-  (define-key ess-mode-map [(control meta j)] 'ess-eval-function-or-paragraph-and-step)
+ ;; customize ESS
+ ;; http://www.kieranhealy.org/blog/archives/2009/10/12/make-shift-enter-do-a-lot-in-ess/
+ ;; Adapted with one minor change from Felipe Salazar at
+ ;; http://www.emacswiki.org/emacs/EmacsSpeaksStatistics
+ (setq ess-ask-for-ess-directory nil)
+ (setq ess-local-process-name "R")
+ (setq ansi-color-for-comint-mode 'filter)
+ (setq comint-scroll-to-bottom-on-input t)
+ (setq comint-scroll-to-bottom-on-output t)
+ (setq comint-move-point-for-output t)
+ (defun my-ess-start-R ()
+   (interactive)
+   (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
+       (progn
+         (delete-other-windows)
+         (setq w1 (selected-window))
+         (setq w1name (buffer-name))
+         (setq w2 (split-window w1 nil t))
+         (R)
+         (set-window-buffer w2 "*R*")
+         (set-window-buffer w1 w1name))))
+ (defun my-ess-eval ()
+   (interactive)
+   (my-ess-start-R)
+   (if (and transient-mark-mode mark-active)
+       (call-interactively 'ess-eval-region)
+     (call-interactively 'ess-eval-line-and-step)))
+ (add-hook 'ess-mode-hook
+           '(lambda()
+              (local-set-key [(shift return)] 'my-ess-eval)))
+ ;; also bind C-return,
+ ;; See http://www.nongnu.org/emacs-tiny-tools/keybindings/ 3.1
+ ;; for why we cannot Shift-Return in terminal mode emacs
+ (add-hook 'ess-mode-hook
+           '(lambda()
+              (local-set-key [C-j] 'my-ess-eval)))
+ (add-hook 'inferior-ess-mode-hook
+           '(lambda()
+              (local-set-key [C-up] 'comint-previous-input)
+              (local-set-key [C-down] 'comint-next-input)))
+ (add-hook 'Rnw-mode-hook
+           '(lambda()
+              (local-set-key [(shift return)] 'my-ess-eval)))
+ ;; clear ESS R console
+ (defun clear-shell ()
+   (interactive)
+   (let ((old-max comint-buffer-maximum-size))
+     (setq comint-buffer-maximum-size 0)
+     (comint-truncate-buffer)
+     (setq comint-buffer-maximum-size old-max))) 
+ ;; another set of shortcuts
+ ;; does not work, maybe KEY part "C-j" does not work...
+ ;; (define-key ess-mode-map "C-j" 'my-ess-eval)
+ ;; (define-key ess-mode-map "C-M-j" 'ess-eval-function-or-paragraph-and-step)
+ ;; working version
+ (define-key ess-mode-map [(control j)] 'my-ess-eval)
+ (define-key ess-mode-map [(control meta j)] 'ess-eval-function-or-paragraph-and-step)
 
-  ;; disable auto convert _ to <-
-  (ess-toggle-underscore nil)
-  (ess-toggle-S-assign nil)
-  (ess-toggle-S-assign nil)
+ ;; disable auto convert _ to <-
+ (ess-toggle-underscore nil)
+ (ess-toggle-S-assign nil)
+ (ess-toggle-S-assign nil)
 
-  ;; align '#', '##' the same way
-  (setq ess-indent-with-fancy-comments nil)
+ ;; align '#', '##' the same way
+ (setq ess-indent-with-fancy-comments nil)
 
                                         ; Enable which-func
-  (which-func-mode)
-  (add-to-list 'which-func-modes 'ess-mode)
+ (which-function-mode)
+ ;; (add-to-list 'which-func-modes 'ess-mode)
                                         ; Modeline format
-  (setq-default mode-line-format
-                '("L%l C%c %b"
-                  global-mode-string " (" mode-name minor-mode-alist "%n)"
-                  (which-func-mode (" " which-func-format ""))))
-  ;; (setq ess-nuke-trailing-whitespace-p 'ask)
-  ;; or even
-  (setq ess-nuke-trailing-whitespace-p t)
+ (setq-default mode-line-format
+               '("L%l C%c %b"
+                 global-mode-string " (" mode-name minor-mode-alist "%n)"
+                 (which-func-mode (" " which-func-format ""))))
+ ;; (setq ess-nuke-trailing-whitespace-p 'ask)
+ ;; or even
+ (setq ess-nuke-trailing-whitespace-p t)
 
-  (require 'r-utils)
+ (require 'r-utils)
 
-  ;; set R program for ESS
-  ;; (setq inferior-R-program-name "~/software/Rmkl/bin/R")
-  ;; (setq inferior-R-program-name "/usr/bin/R")
-  ;; (setq inferior-R-program-name "~/bin/R")
+ ;; set R program for ESS
+ ;; (setq inferior-R-program-name "~/software/Rmkl/bin/R")
+ ;; (setq inferior-R-program-name "/usr/bin/R")
+ ;; (setq inferior-R-program-name "~/bin/R")
 
-  ;; set ess coding style
-  ;; http://stackoverflow.com/questions/12805873/changing-indentation-in-emacs-ess
-  (add-hook 'ess-mode-hook
-            (lambda ()
-              (ess-set-style 'DEFAULT 'quiet)
-              ;; Because
-              ;;                                 DEF GNU BSD K&R  C++
-              ;; ess-indent-level                  2   2   8   5  4
-              ;; ess-continued-statement-offset    2   2   8   5  4
-              ;; ess-brace-offset                  0   0  -8  -5 -4
-              ;; ess-arg-function-offset           2   4   0   0  0
-              ;; ess-expression-offset             4   2   8   5  4
-              ;; ess-else-offset                   0   0   0   0  0
-              ;; ess-close-brace-offset            0   0   0   0  0
-              (add-hook 'local-write-file-hooks
-                        (lambda ()
-                          (ess-nuke-trailing-whitespace)))))
-  )
+ ;; set ess coding style
+ ;; http://stackoverflow.com/questions/12805873/changing-indentation-in-emacs-ess
+ (add-hook 'ess-mode-hook
+           (lambda ()
+             (ess-set-style 'DEFAULT 'quiet)
+	     ;; Because
+	     ;;                                 DEF GNU BSD K&R  C++
+	     ;; ess-indent-level                  2   2   8   5  4
+	     ;; ess-continued-statement-offset    2   2   8   5  4
+	     ;; ess-brace-offset                  0   0  -8  -5 -4
+	     ;; ess-arg-function-offset           2   4   0   0  0
+	     ;; ess-expression-offset             4   2   8   5  4
+	     ;; ess-else-offset                   0   0   0   0  0
+	     ;; ess-close-brace-offset            0   0   0   0  0
+             (add-hook 'local-write-file-hooks
+                       (lambda ()
+                         (ess-nuke-trailing-whitespace)))))
+ )  
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1567,7 +1571,7 @@ Symbols matching the text at point are put first in the completion list."
   (imenu--make-index-alist)
   (let ((name-and-pos '())
         (symbol-names '()))
-    (flet ((addsymbols (symbol-list)
+    (cl-flet ((addsymbols (symbol-list)
                        (when (listp symbol-list)
                          (dolist (symbol symbol-list)
                            (let ((name nil) (position nil))
@@ -2397,7 +2401,7 @@ Symbols matching the text at point are put first in the completion list."
  '(flycheck-googlelint-filter "-legal")
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yasnippet iedit wakatime-mode magit column-marker yaml-mode workgroups2 window-number undo-tree tagedit tabbar swiper swbuff sr-speedbar spinner smex smartparens smart-compile shell-toggle rainbow-delimiters racket-mode queue python-mode pymacs powerline paredit pager org multiple-cursors move-text markdown-toc magit-popup list-register js2-mode jedi iy-go-to-char ipython htmlize gtags google-c-style go-mode git-gutter git-commit git expand-region dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ace-jump-mode)))
+    (workgroups2 magit use-package column-marker undo-tree swbuff spinner queue python-mode pymacs org list-register iy-go-to-char ipython gtags dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ace-jump-mode)))
  '(wakatime-api-key "3a6341fc-ca1c-425a-a0ab-52da157cc2e8"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

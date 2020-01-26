@@ -260,3 +260,5 @@ dedup_pathvar PATH
 dedup_pathvar MANPATH
 dedup_pathvar LD_LIBRARY_PATH
 dedup_pathvar LIBRARY_PATH
+
+umask 0022
