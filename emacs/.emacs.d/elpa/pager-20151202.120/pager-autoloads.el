@@ -1,10 +1,14 @@
 ;;; pager-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
+
+(add-to-list 'load-path (directory-file-name
+                         (or (file-name-directory #$) (car load-path))))
+
 
-;;;### (autoloads nil "pager" "pager.el" (23406 5113 790696 318000))
-;;; Generated autoloads from pager.el
+;;;### (autoloads nil "pager" "../../../../../.emacs.d/elpa/pager-20151202.120/pager.el"
+;;;;;;  "ca6dda6cda1f853b31f01e8251bd3040")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/pager-20151202.120/pager.el
 
 (autoload 'pager-page-down "pager" "\
 Like scroll-up, but moves a fixed amount of lines (fixed relative the
@@ -29,6 +33,20 @@ Move point to next line while scrolling screen up one line.
 The effect is that the cursor stays in the same position on the screen.
 
 \(fn)" t nil)
+
+;;;### (autoloads "actual autoloads are elsewhere" "pager" "../../../../../.emacs.d/elpa/pager-20151202.120/pager.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/pager-20151202.120/pager.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pager" '("pg-" "pager-" "row-")))
+
+;;;***
+
+;;;***
+
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/pager-20151202.120/pager-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/pager-20151202.120/pager.el")
+;;;;;;  (0 0 0 0))
 
 ;;;***
 
@@ -36,5 +54,6 @@ The effect is that the cursor stays in the same position on the screen.
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; pager-autoloads.el ends here

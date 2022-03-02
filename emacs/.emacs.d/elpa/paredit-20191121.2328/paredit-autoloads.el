@@ -6,8 +6,9 @@
                          (or (file-name-directory #$) (car load-path))))
 
 
-;;;### (autoloads nil "paredit" "paredit.el" (0 0 0 0))
-;;; Generated autoloads from paredit.el
+;;;### (autoloads nil "paredit" "../../../../../.emacs.d/elpa/paredit-20191121.2328/paredit.el"
+;;;;;;  "7f0d8daf49bb1aa4db5ce72cd8a9a365")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/paredit-20191121.2328/paredit.el
 
 (autoload 'paredit-mode "paredit" "\
 Minor mode for pseudo-structurally editing Lisp code.
@@ -24,8 +25,20 @@ Paredit behaves badly if parentheses are unbalanced, so exercise
 Turn on pseudo-structural editing of Lisp code.
 
 \(fn)" t nil)
+
+;;;### (autoloads "actual autoloads are elsewhere" "paredit" "../../../../../.emacs.d/elpa/paredit-20191121.2328/paredit.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/paredit-20191121.2328/paredit.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "paredit" '("paredit-" "?\\" "disable-paredit-mode")))
+
+;;;***
+
+;;;***
+
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/paredit-20191121.2328/paredit-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/paredit-20191121.2328/paredit.el")
+;;;;;;  (0 0 0 0))
 
 ;;;***
 

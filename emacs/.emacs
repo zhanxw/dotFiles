@@ -98,9 +98,9 @@ There are two things you can do about this warning:
   (indent-region (point-min) (point-max) nil))
 
 
-;; In every buffer, the line which contains the cursor will be fully
-;; highlighted
-(global-hl-line-mode 1)
+;; ;; In every buffer, the line which contains the cursor will be fully
+;; ;; highlighted
+;; (global-hl-line-mode 1)
 
 
 ;; highlight parens
@@ -471,6 +471,7 @@ There are two things you can do about this warning:
  (setq comint-scroll-to-bottom-on-input t)
  (setq comint-scroll-to-bottom-on-output t)
  (setq comint-move-point-for-output t)
+ (setq ess-indent-with-fancy-comments nil) 
  (defun my-ess-start-R ()
    (interactive)
    (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
@@ -525,6 +526,7 @@ There are two things you can do about this warning:
  (ess-toggle-S-assign nil)
 
  ;; align '#', '##' the same way
+ ;; obsolete (setq ess-fancy-comments nil)
  (setq ess-indent-with-fancy-comments nil)
 
                                         ; Enable which-func
@@ -724,24 +726,25 @@ There are two things you can do about this warning:
              :mode ("\\.py\\'" . python-mode)
              :interpreter ("python" . python-mode)
              :config
-(setq
- python-shell-interpreter "ipython"
- python-shell-interpreter-args ""
- python-shell-prompt-regexp "In \\[[0-9]+\\]: "
- python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
- python-shell-completion-setup-code
- "from IPython.core.completerlib import module_completion"
- python-shell-completion-module-string-code
- "';'.join(module_completion('''%s'''))\n"
- python-shell-completion-string-code
- "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-(setq py-shell-name "ipython")
+;; (setq
+;;  python-shell-interpreter "ipython"
+;;  python-shell-interpreter-args ""
+;;  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+;;  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+;;  python-shell-completion-setup-code
+;;  "from IPython.core.completerlib import module_completion"
+;;  python-shell-completion-module-string-code
+;;  "';'.join(module_completion('''%s'''))\n"
+;;  python-shell-completion-string-code
+;;  "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+;; (setq py-shell-name "ipython")
 
-;; let imenu support python
-;; http://stackoverflow.com/questions/6317667/fabian-gallinas-python-el-imenu-support
-(add-hook 'python-mode-hook
-          (lambda ()
-                (setq imenu-create-index-function 'python-imenu-create-index)))
+;; the section below does not work anymore...             
+;; ;; let imenu support python
+;; ;; http://stackoverflow.com/questions/6317667/fabian-gallinas-python-el-imenu-support
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;                 (setq imenu-create-index-function 'python-imenu-create-index)))
 
 ;; Disable Pymacs + Ropemacs as it is infrequently used
 ;; ;; ;; Pymacs + Ropemacs
@@ -775,7 +778,7 @@ There are two things you can do about this warning:
   )
 (add-hook 'python-mode-hook 'my-python-mode-common-hook)
 
-(setq python-shell-interpreter "ipython")
+(setq python-shell-interpreter "python")
 ;; enable jedi for python
 ;; (require 'epc)
 (use-package epc
@@ -1849,11 +1852,11 @@ Symbols matching the text at point are put first in the completion list."
 ;;   (auto-package-update-at-time "03:00")
 ;;   (auto-package-update-maybe))
 
-;; wakatime
-(use-package wakatime-mode
-  :config
-  (custom-set-variables '(wakatime-api-key "3a6341fc-ca1c-425a-a0ab-52da157cc2e8"))
-  (global-wakatime-mode t))
+;; ;; wakatime
+;; (use-package wakatime-mode
+;;   :config
+;;   (custom-set-variables '(wakatime-api-key "3a6341fc-ca1c-425a-a0ab-52da157cc2e8"))
+;;   (global-wakatime-mode t))
 
 ;; ace-jump-mode
 ;;
@@ -2401,7 +2404,7 @@ Symbols matching the text at point are put first in the completion list."
  '(flycheck-googlelint-filter "-legal")
  '(package-selected-packages
    (quote
-    (workgroups2 magit use-package column-marker undo-tree swbuff spinner queue python-mode pymacs org list-register iy-go-to-char ipython gtags dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ace-jump-mode)))
+    (snakemake-mode magit use-package column-marker undo-tree swbuff spinner queue python-mode pymacs org list-register iy-go-to-char ipython gtags dna-mode color-theme clang-format bm auto-package-update auto-indent-mode auto-compile auctex anzu ace-jump-mode)))
  '(wakatime-api-key "3a6341fc-ca1c-425a-a0ab-52da157cc2e8"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -1,11 +1,14 @@
 ;;; move-text-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
+
+(add-to-list 'load-path (directory-file-name
+                         (or (file-name-directory #$) (car load-path))))
+
 
-;;;### (autoloads nil "move-text" "move-text.el" (23406 5117 474714
-;;;;;;  122000))
-;;; Generated autoloads from move-text.el
+;;;### (autoloads nil "move-text" "../../../../../.emacs.d/elpa/move-text-20170909.330/move-text.el"
+;;;;;;  "cfd6d072070dadd58805c1b2fac7ddcb")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/move-text-20170909.330/move-text.el
 
 (autoload 'move-text--total-lines "move-text" "\
 Convenience function to get the total lines in the buffer / or narrowed buffer.
@@ -71,6 +74,20 @@ Move the line or region (START END) down by N lines.
 Use default bindings for move-text-up and move-text-down (M-up / M-down).
 
 \(fn)" t nil)
+
+;;;### (autoloads "actual autoloads are elsewhere" "move-text" "../../../../../.emacs.d/elpa/move-text-20170909.330/move-text.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/move-text-20170909.330/move-text.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "move-text" '("move-text-get-region-and-prefix")))
+
+;;;***
+
+;;;***
+
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/move-text-20170909.330/move-text-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/move-text-20170909.330/move-text.el")
+;;;;;;  (0 0 0 0))
 
 ;;;***
 
@@ -78,5 +95,6 @@ Use default bindings for move-text-up and move-text-down (M-up / M-down).
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; move-text-autoloads.el ends here
